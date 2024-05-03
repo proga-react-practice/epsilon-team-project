@@ -25,10 +25,8 @@ const StyledCard = styled(Card)(({ theme }) => ({
   margin: theme.spacing(1),
   borderRadius: theme.shape.borderRadius * 2,
   boxShadow: theme.shadows[3],
-  backgroundColor: (props) =>
-    props.darkMode ? theme.palette.grey[700] : theme.palette.background.paper,
+  backgroundColor: theme.palette.background.default,
   animation: `${cardSlideIn} 0.5s ease-out`,
-
   [theme.breakpoints.down("sm")]: {
     width: "90%",
     height: "auto",
@@ -42,8 +40,7 @@ const StyledCardContent = styled(CardContent)({
 const Technology = styled(Typography)(({ theme }) => ({
   fontWeight: theme.typography.fontWeightBold,
   fontStyle: "italic",
-  color: (props) =>
-    props.darkMode ? theme.palette.grey[300] : theme.palette.grey[700],
+  color: theme.palette.text.primary,
 }));
 
 const CardsContainer = styled(Box)(({ theme }) => ({
@@ -52,10 +49,7 @@ const CardsContainer = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   padding: theme.spacing(2),
   width: "100%",
-  backgroundColor: (props) =>
-    props.darkMode ? theme.palette.grey[800] : theme.palette.grey[200],
-
-  // Медіа-запит для малих екранів
+  backgroundColor: theme.palette.background.default,
   [theme.breakpoints.down("sm")]: {
     justifyContent: "flex-start",
   },
@@ -65,26 +59,24 @@ const Cards: React.FC<{
   projects: Project[];
   deleteProject: (id: number) => void;
   darkMode: boolean;
-}> = ({ projects, deleteProject, darkMode }) => {
+}> = ({ projects, deleteProject }) => {
   return (
-    <CardsContainer darkMode={darkMode}>
+    <CardsContainer>
       <Typography variant="h2" sx={{ fontSize: 25, fontWeight: "bold" }}>
         Project Orders:
       </Typography>
       {projects.map((project) => (
-        <StyledCard key={project.id} darkMode={darkMode}>
+        <StyledCard key={project.id}>
           <StyledCardContent>
             <Typography variant="h3">{project.name}</Typography>
             <Typography>
-              <Technology darkMode={darkMode}>Description:</Technology>{" "}
-              {project.description}
+              <Technology>Description:</Technology> {project.description}
             </Typography>
             <Typography>
-              <Technology darkMode={darkMode}>Deadline:</Technology>{" "}
-              {project.deadline}
+              <Technology>Deadline:</Technology> {project.deadline}
             </Typography>
             <Typography>
-              <Technology darkMode={darkMode}>Technologies:</Technology>{" "}
+              <Technology>Technologies:</Technology>{" "}
               {project.technologies.join(", ")}
             </Typography>
           </StyledCardContent>
@@ -92,7 +84,7 @@ const Cards: React.FC<{
             <Button
               onClick={() => deleteProject(project.id)}
               variant="contained"
-              color="error"
+              color="primary"
             >
               Delete
             </Button>

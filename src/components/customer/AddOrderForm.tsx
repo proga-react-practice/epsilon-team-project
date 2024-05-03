@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import { Typography } from "@mui/material";
 import { Project } from "./Utils";
-import { grey, red, green } from "@mui/material/colors";
 import { styled } from "@mui/system";
 
 const TechnologiesList: { id: string; name: string }[] = [
@@ -25,23 +24,20 @@ const TechnologiesList: { id: string; name: string }[] = [
 ];
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
-  color: (props) =>
-    props.darkMode ? theme.palette.grey[300] : theme.palette.text.primary,
+  color: theme.palette.text.primary,
 }));
 
 const StyledFormWrapper = styled(Box)(({ theme }) => ({
   border: "1px solid #ccc",
   padding: "20px",
   width: "450px",
-  backgroundColor: (props) =>
-    props.darkMode ? theme.palette.grey[800] : theme.palette.grey[300],
+  backgroundColor: theme.palette.background.default,
   borderRadius: "10px",
 }));
 
 const AddOrderForm: React.FC<{
   addProject: (project: Project) => void;
-  darkMode: boolean;
-}> = ({ addProject, darkMode }) => {
+}> = ({ addProject }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
@@ -79,21 +75,17 @@ const AddOrderForm: React.FC<{
 
   return (
     <Box
-      className={`form-container ${
-        darkMode ? "dark-background" : "light-background"
-      }`}
+      className="form-container"
       sx={{
         justifyContent: "left",
         padding: "20px",
       }}
     >
-      <StyledFormWrapper darkMode={darkMode}>
-        <StyledTypography variant="h2" darkMode={darkMode}>
-          Project Order Form
-        </StyledTypography>
+      <StyledFormWrapper>
+        <StyledTypography variant="h2">Project Order Form</StyledTypography>
         <form onSubmit={handleSubmit}>
           <Box className="form-group" sx={{ marginBottom: "15px" }}>
-            <StyledTypography htmlFor="project-name" darkMode={darkMode}>
+            <StyledTypography htmlFor="project-name">
               Project Name:
             </StyledTypography>
             <TextField
@@ -107,7 +99,7 @@ const AddOrderForm: React.FC<{
             />
           </Box>
           <Box className="form-group" sx={{ marginBottom: "15px" }}>
-            <StyledTypography htmlFor="project-description" darkMode={darkMode}>
+            <StyledTypography htmlFor="project-description">
               Project Description:
             </StyledTypography>
             <TextField
@@ -123,9 +115,7 @@ const AddOrderForm: React.FC<{
             />
           </Box>
           <Box className="form-group" sx={{ marginBottom: "15px" }}>
-            <StyledTypography htmlFor="deadline" darkMode={darkMode}>
-              Deadline:
-            </StyledTypography>
+            <StyledTypography htmlFor="deadline">Deadline:</StyledTypography>
             <TextField
               id="deadline"
               type="date"
@@ -135,9 +125,7 @@ const AddOrderForm: React.FC<{
             />
           </Box>
           <Box className="form-group" sx={{ marginBottom: "15px" }}>
-            <StyledTypography darkMode={darkMode}>
-              Technologies:
-            </StyledTypography>
+            <StyledTypography>Technologies:</StyledTypography>
             <FormGroup>
               {TechnologiesList.map((tech) => (
                 <FormControlLabel
@@ -157,14 +145,17 @@ const AddOrderForm: React.FC<{
             <Button
               type="submit"
               variant="contained"
-              sx={{ marginRight: "10px", bgcolor: green[500] }}
+              sx={{
+                marginRight: "10px",
+                bgcolor: (theme) => theme.palette.primary.main,
+              }}
             >
               Submit
             </Button>
             <Button
               type="button"
               variant="contained"
-              sx={{ bgcolor: red[500] }}
+              sx={{ bgcolor: (theme) => theme.palette.secondary.main }}
               onClick={() => {
                 setName("");
                 setDescription("");

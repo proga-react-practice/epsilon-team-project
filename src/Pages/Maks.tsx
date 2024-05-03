@@ -1,37 +1,13 @@
 import React, { useState } from "react";
 import AddOrderForm from "../components/customer/AddOrderForm";
 import Cards from "../components/customer/Cards";
-import "./index.css";
-//import { Project } from "./Utils";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Project } from "../components/customer/Utils";
+import { lightTheme, darkTheme } from "../themes";
 import IconButton from "@mui/material/IconButton";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
-
-export const lightTheme = createTheme({
-  palette: {
-    mode: "light",
-    text: {
-      primary: "#000000",
-    },
-    background: {
-      default: "#F1F3F4",
-    },
-  },
-});
-
-export const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-    text: {
-      primary: "rgb(255, 165, 0)",
-    },
-    background: {
-      default: "#202124",
-    },
-  },
-});
+import { ThemeProvider } from "@mui/material/styles";
 
 const App: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
