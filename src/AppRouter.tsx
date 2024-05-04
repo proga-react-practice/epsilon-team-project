@@ -1,16 +1,17 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Freelancers from './Pages/Vova'
-function AppRouter() {
+import Customers from './Pages/Maks'
+
+const Router = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={< Freelancers/>} />
-        <Route path="/vova" element={< Freelancers/>} />
-        <Route path="/maks" element={< Freelancers/>} />
-        <Route path="/*" element={< Freelancers/>} />
-      </Routes>
-    </BrowserRouter>
+    <Routes> 
+    <Route path="/" element={<Freelancers />} /> 
+    <Route path="/vova" element={<Freelancers />} />
+    <Route path="/maks" element={<Customers />} />
+    <Route path="*" element={<Freelancers />} />
+    </Routes>
   );
 }
 
-export default AppRouter;
+export default Router;
+
