@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import AddOrderForm from "../components/customer/AddOrderForm";
 import Cards from "../components/customer/Cards";
 import { Project } from "../components/customer/Utils";
-import { lightTheme, darkTheme } from "../components/themes";
+import { lightTheme, darkTheme } from "../components/themes/themes";
 import IconButton from "@mui/material/IconButton";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import { ThemeProvider } from "@mui/material/styles";
-import DefaultLayout from '../components/deafoltlayout';
+import DefaultLayout from '../components/layout/deafoltlayout';
 const Customers: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [darkMode, setDarkMode] = useState(false);

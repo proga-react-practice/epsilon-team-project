@@ -3,11 +3,11 @@ import RegistrationForm from '../components/freelancer/form';
 import FreelancerList from '../components/freelancer/cards';
 import { Freelancer } from '../components/freelancer/Freelancer';
 import { ThemeProvider} from '@mui/material/styles';
-import { lightTheme, darkTheme } from '../components/themes';
+import { lightTheme, darkTheme } from '../components/themes/themes';
 import Switch from '@mui/material/Switch';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Box, Grid } from '@mui/material';
-import DefaultLayout from '../components/deafoltlayout';
+import DefaultLayout from '../components/layout/deafoltlayout';
 
 const Freelancers: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
