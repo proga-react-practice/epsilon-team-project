@@ -9,7 +9,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import { ThemeProvider } from "@mui/material/styles";
 
-const App: React.FC = () => {
+const Customers: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [darkMode, setDarkMode] = useState(false);
 
@@ -58,4 +58,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Customers;

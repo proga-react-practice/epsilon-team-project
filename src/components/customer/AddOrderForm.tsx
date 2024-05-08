@@ -85,7 +85,7 @@ const AddOrderForm: React.FC<{
         <StyledTypography variant="h2">Project Order Form</StyledTypography>
         <form onSubmit={handleSubmit}>
           <Box className="form-group" sx={{ marginBottom: "15px" }}>
-            <StyledTypography htmlFor="project-name">
+            <StyledTypography>
               Project Name:
             </StyledTypography>
             <TextField
@@ -99,7 +99,7 @@ const AddOrderForm: React.FC<{
             />
           </Box>
           <Box className="form-group" sx={{ marginBottom: "15px" }}>
-            <StyledTypography htmlFor="project-description">
+            <StyledTypography >
               Project Description:
             </StyledTypography>
             <TextField
@@ -115,7 +115,7 @@ const AddOrderForm: React.FC<{
             />
           </Box>
           <Box className="form-group" sx={{ marginBottom: "15px" }}>
-            <StyledTypography htmlFor="deadline">Deadline:</StyledTypography>
+            <StyledTypography>Deadline:</StyledTypography>
             <TextField
               id="deadline"
               type="date"
