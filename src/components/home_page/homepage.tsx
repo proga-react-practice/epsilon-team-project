@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, Button, Box, Link, ThemeProvider, Switch, Grid } from '@mui/material';
-import DefaultLayout from '../deafoltlayout';
-import { lightTheme, darkTheme } from '../themes'; 
+import DefaultLayout from '../layout/deafoltlayout';
+import { lightTheme, darkTheme } from '../themes/themes'; 
 
 const Home: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
