@@ -1,7 +1,7 @@
 import { ThemeProvider } from "@emotion/react";
 import { FC } from "react";
 import { BrowserRouter } from "react-router-dom"; 
-import { lightTheme, darkTheme } from './themes';
+import { lightTheme, darkTheme } from './components/themes';
 import Router from "./AppRouter";
 
 
