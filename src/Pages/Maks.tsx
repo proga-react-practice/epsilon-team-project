@@ -47,12 +47,21 @@ const Customers: React.FC = () => {
         >
           <Brightness4Icon />
         </IconButton>
-        <AddOrderForm addProject={addProject} darkMode={darkMode} />
-        <Cards
-          projects={projects}
-          deleteProject={deleteProject}
-          darkMode={darkMode}
-        />
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+          <Box sx={{ flexBasis: "30%", marginRight: "20px" }}>
+            <AddOrderForm addProject={addProject} />
+          </Box>
+          <Box sx={{ flexBasis: "65%" }}>
+            <Cards projects={projects} deleteProject={deleteProject} />
+          </Box>
+        </Box>
       </Box>
     </ThemeProvider>
   );

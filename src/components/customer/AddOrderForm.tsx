@@ -82,12 +82,18 @@ const AddOrderForm: React.FC<{
       }}
     >
       <StyledFormWrapper>
-        <StyledTypography variant="h2">Project Order Form</StyledTypography>
+        <StyledTypography
+          variant="h2"
+          sx={{
+            color: (theme) =>
+              theme.palette.mode === "dark" ? "#62D682" : "#646BD9",
+          }}
+        >
+          Project Order Form
+        </StyledTypography>
         <form onSubmit={handleSubmit}>
           <Box className="form-group" sx={{ marginBottom: "15px" }}>
-            <StyledTypography>
-              Project Name:
-            </StyledTypography>
+            <StyledTypography>Project Name:</StyledTypography>
             <TextField
               id="project-name"
               value={name}
@@ -99,9 +105,7 @@ const AddOrderForm: React.FC<{
             />
           </Box>
           <Box className="form-group" sx={{ marginBottom: "15px" }}>
-            <StyledTypography >
-              Project Description:
-            </StyledTypography>
+            <StyledTypography>Project Description:</StyledTypography>
             <TextField
               id="project-description"
               multiline
