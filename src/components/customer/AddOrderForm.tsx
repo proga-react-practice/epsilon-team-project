@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { useForm, Controller } from "react-hook-form";
 import {
   TextField,
   Button,
@@ -35,42 +36,26 @@ const StyledFormWrapper = styled(Box)(({ theme }) => ({
   borderRadius: "10px",
 }));
 
-const AddOrderForm: React.FC<{
-  addProject: (project: Project) => void;
-}> = ({ addProject }) => {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [deadline, setDeadline] = useState("");
-  const [technologies, setTechnologies] = useState<string[]>([]);
+const AddOrderForm: React.FC<{ addProject: (project: Project) => void }> = ({
+  addProject,
+}) => {
+  const { control, handleSubmit, reset } = useForm<Project>({
+    defaultValues: {
+      name: "",
+      description: "",
+      deadline: "",
+      technologies: [],
+    },
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name || !description || !deadline || technologies.length === 0) {
-      alert("Please fill in all fields");
-      return;
-    }
+  const onSubmit = (data: Project) => {
     const newProject: Project = {
+      ...data,
       id: Date.now(),
-      name,
-      description,
-      deadline,
-      technologies,
     };
 
     addProject(newProject);
-
-    setName("");
-    setDescription("");
-    setDeadline("");
-    setTechnologies([]);
-  };
-
-  const handleCheckboxChange = (value: string) => {
-    if (technologies.includes(value)) {
-      setTechnologies(technologies.filter((tech) => tech !== value));
-    } else {
-      setTechnologies([...technologies, value]);
-    }
+    reset();
   };
 
   return (
@@ -91,59 +76,86 @@ const AddOrderForm: React.FC<{
         >
           Project Order Form
         </StyledTypography>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Box className="form-group" sx={{ marginBottom: "15px" }}>
             <StyledTypography>Project Name:</StyledTypography>
-            <TextField
-              id="project-name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              sx={{
-                width: "350px",
-              }}
+            <Controller
+              name="name"
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  required
+                  sx={{
+                    width: "350px",
+                  }}
+                />
+              )}
             />
           </Box>
           <Box className="form-group" sx={{ marginBottom: "15px" }}>
             <StyledTypography>Project Description:</StyledTypography>
-            <TextField
-              id="project-description"
-              multiline
-              rows={4}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-              sx={{
-                width: "350px",
-              }}
+            <Controller
+              name="description"
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  multiline
+                  rows={4}
+                  required
+                  sx={{
+                    width: "350px",
+                  }}
+                />
+              )}
             />
           </Box>
           <Box className="form-group" sx={{ marginBottom: "15px" }}>
             <StyledTypography>Deadline:</StyledTypography>
-            <TextField
-              id="deadline"
-              type="date"
-              value={deadline}
-              onChange={(e) => setDeadline(e.target.value)}
-              required
+            <Controller
+              name="deadline"
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <TextField {...field} type="date" required />
+              )}
             />
           </Box>
           <Box className="form-group" sx={{ marginBottom: "15px" }}>
             <StyledTypography>Technologies:</StyledTypography>
-            <FormGroup>
-              {TechnologiesList.map((tech) => (
-                <FormControlLabel
-                  key={tech.id}
-                  control={
-                    <Checkbox
-                      checked={technologies.includes(tech.id)}
-                      onChange={() => handleCheckboxChange(tech.id)}
+            <Controller
+              name="technologies"
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <FormGroup>
+                  {TechnologiesList.map((tech) => (
+                    <FormControlLabel
+                      key={tech.id}
+                      control={
+                        <Checkbox
+                          checked={field.value.includes(tech.id)}
+                          onChange={(_, checked) => {
+                            if (checked) {
+                              field.value.push(tech.id);
+                            } else {
+                              field.value = field.value.filter(
+                                (value) => value !== tech.id
+                              );
+                            }
+                            field.onChange(field.value);
+                          }}
+                        />
+                      }
+                      label={tech.name}
                     />
-                  }
-                  label={tech.name}
-                />
-              ))}
-            </FormGroup>
+                  ))}
+                </FormGroup>
+              )}
+            />
           </Box>
           <Box className="form-group" sx={{ marginBottom: "15px" }}>
             <Button
@@ -160,12 +172,7 @@ const AddOrderForm: React.FC<{
               type="button"
               variant="contained"
               sx={{ bgcolor: (theme) => theme.palette.secondary.main }}
-              onClick={() => {
-                setName("");
-                setDescription("");
-                setDeadline("");
-                setTechnologies([]);
-              }}
+              onClick={() => reset()}
             >
               Clear Form
             </Button>
