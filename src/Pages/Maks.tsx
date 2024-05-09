@@ -3,7 +3,7 @@ import AddOrderForm from "../components/customer/AddOrderForm";
 import Cards from "../components/customer/Cards";
 import { Project } from "../components/customer/Utils";
 import { lightTheme, darkTheme } from "../components/themes/themes";
-import Switch from "@mui/material/Switch"; // Імпортуйте компонент Switch
+import Switch from "@mui/material/Switch";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import { ThemeProvider } from "@mui/material/styles";
@@ -58,7 +58,6 @@ const Customers: React.FC = () => {
             <Box sx={{ flexBasis: "65%" }}>
               <Cards projects={projects} deleteProject={deleteProject} />
             </Box>
-            {/* Замінено іконку на Switch компонент */}
             <Switch
               checked={darkMode}
               onChange={toggleDarkMode}

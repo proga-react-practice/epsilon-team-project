@@ -10,7 +10,6 @@ import {
   Switch,
   Grid,
 } from "@mui/material";
-import DefaultLayout from "../layout/deafoltlayout";
 import { lightTheme, darkTheme } from "../themes/themes";
 
 const Home: React.FC = () => {
@@ -52,88 +51,86 @@ const Home: React.FC = () => {
           minHeight: "100vh",
         }}
       >
-        <DefaultLayout>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
-              <Box sx={{ mt: { xs: "40px", md: "190px" } }}>
-                <Typography
-                  variant="h4"
-                  gutterBottom
-                  sx={{
-                    fontFamily: "Montserrat",
-                    fontWeight: "bold",
-                    fontSize: { xs: "24px", md: "48px" },
-                  }}
-                  color="primary"
-                >
-                  Lorem ipsum dolor sit
-                </Typography>
-
-                <Typography
-                  variant="body1"
-                  gutterBottom
-                  sx={{
-                    maxWidth: "100%",
-                    fontFamily: "Montserrat",
-                    fontSize: { xs: "16px", md: "24px" },
-                  }}
-                  color="primary"
-                >
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
-                  vehicula massa nec lacus maximus, a posuere quam scelerisque.
-                </Typography>
-
-                <Box sx={{ display: "flex", mt: 4 }}>
-                  <Link href="/maks" underline="none">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      sx={{
-                        height: { xs: "40px", md: "45px", color: "whitesmoke" },
-                        fontFamily: "Montserrat",
-                        mr: { xs: "6px", md: "12px" },
-                        fontSize: { xs: "12px", md: "14px" },
-                      }}
-                    >
-                      Пропоную роботу
-                    </Button>
-                  </Link>
-
-                  <Link href="/vova" underline="none">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      sx={{
-                        height: { xs: "40px", md: "45px", color: "whitesmoke" },
-                        fontFamily: "Montserrat",
-                        fontSize: { xs: "12px", md: "14px" },
-                      }}
-                    >
-                      Пропоную послуги
-                    </Button>
-                  </Link>
-                </Box>
-              </Box>
-            </Grid>
-
-            <Grid item xs={12} md={6}>
-              <Box
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <Box sx={{ mt: { xs: "40px", md: "190px" } }}>
+              <Typography
+                variant="h4"
+                gutterBottom
                 sx={{
-                  mt: { xs: "40px", md: "100px" },
-                  ml: "40px",
-                  display: "flex",
-                  mr: "10px",
+                  fontFamily: "Montserrat",
+                  fontWeight: "bold",
+                  fontSize: { xs: "24px", md: "48px" },
                 }}
+                color="primary"
               >
-                <img
-                  src="home10.png"
-                  alt="fff"
-                  style={{ maxWidth: "100%", height: "auto" }}
-                />
+                Lorem ipsum dolor sit
+              </Typography>
+
+              <Typography
+                variant="body1"
+                gutterBottom
+                sx={{
+                  maxWidth: "100%",
+                  fontFamily: "Montserrat",
+                  fontSize: { xs: "16px", md: "24px" },
+                }}
+                color="primary"
+              >
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis
+                vehicula massa nec lacus maximus, a posuere quam scelerisque.
+              </Typography>
+
+              <Box sx={{ display: "flex", mt: 4 }}>
+                <Link href="/maks" underline="none">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    sx={{
+                      height: { xs: "40px", md: "45px", color: "whitesmoke" },
+                      fontFamily: "Montserrat",
+                      mr: { xs: "6px", md: "12px" },
+                      fontSize: { xs: "12px", md: "14px" },
+                    }}
+                  >
+                    Пропоную роботу
+                  </Button>
+                </Link>
+
+                <Link href="/vova" underline="none">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    sx={{
+                      height: { xs: "40px", md: "45px", color: "whitesmoke" },
+                      fontFamily: "Montserrat",
+                      fontSize: { xs: "12px", md: "14px" },
+                    }}
+                  >
+                    Пропоную послуги
+                  </Button>
+                </Link>
               </Box>
-            </Grid>
+            </Box>
           </Grid>
-        </DefaultLayout>
+
+          <Grid item xs={12} md={6}>
+            <Box
+              sx={{
+                mt: { xs: "40px", md: "100px" },
+                ml: "40px",
+                display: "flex",
+                mr: "10px",
+              }}
+            >
+              <img
+                src="home10.png"
+                alt="fff"
+                style={{ maxWidth: "100%", height: "auto" }}
+              />
+            </Box>
+          </Grid>
+        </Grid>
       </Box>
     </ThemeProvider>
   );
