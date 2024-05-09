@@ -12,6 +12,10 @@ const Home: React.FC = () => {
 
   const theme = darkMode ? darkTheme : lightTheme;
 
+  const lightImage = "home10.png";
+  const darkImage = "home15.webp";
+  const imageUrl = darkMode ? darkImage : lightImage;
+
   return (
     <ThemeProvider theme={theme}>
       <AppBar position="static" color="primary" sx={{ width: '100%' }}>
@@ -67,7 +71,7 @@ const Home: React.FC = () => {
 
             <Grid item xs={12} md={6}>
               <Box sx={{ mt: { xs: '40px', md: '100px' }, ml: '40px', display: 'flex', mr:'10px' }}>
-                <img src="home10.png" alt="fff" style={{ maxWidth: '100%', height: 'auto' }} />
+                <img src={imageUrl} alt="fff" style={{ maxWidth: '100%', height: 'auto' }} />
               </Box>
             </Grid>
           </Grid>
