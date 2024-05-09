@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import {
+  AppBar,
+  Toolbar,
   Typography,
   Button,
   Box,
@@ -22,6 +24,27 @@ const Home: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <AppBar position="static" color="primary" sx={{ width: "100%" }}>
+        <Toolbar>
+          <Typography
+            variant="h6"
+            sx={{
+              flexGrow: 1,
+              fontFamily: "Montserrat",
+              fontSize: { xs: "18px", md: "24px" },
+            }}
+            color="customColor1"
+          >
+            FreelanceBase
+          </Typography>
+          <Switch
+            checked={darkMode}
+            onChange={toggleDarkMode}
+            color="primary"
+            inputProps={{ "aria-label": "toggle dark mode" }}
+          />
+        </Toolbar>
+      </AppBar>
       <Box
         sx={{
           backgroundColor: theme.palette.background.default,
@@ -108,12 +131,6 @@ const Home: React.FC = () => {
                   style={{ maxWidth: "100%", height: "auto" }}
                 />
               </Box>
-              <Switch
-                checked={darkMode}
-                onChange={toggleDarkMode}
-                color="primary"
-                inputProps={{ "aria-label": "toggle dark mode" }}
-              />
             </Grid>
           </Grid>
         </DefaultLayout>
