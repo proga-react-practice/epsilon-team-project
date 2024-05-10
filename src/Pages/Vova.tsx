@@ -7,7 +7,7 @@ import { lightTheme, darkTheme } from '../components/themes/themes';
 import Switch from '@mui/material/Switch';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Box, Grid } from '@mui/material';
-import DefaultLayout from '../components/layout/deafoltlayout';
+
 
 const Freelancers: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -26,7 +26,7 @@ const Freelancers: React.FC = () => {
   const theme = darkMode ? darkTheme : lightTheme;
 
   return (
-    <DefaultLayout>
+  
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box>
@@ -46,7 +46,7 @@ const Freelancers: React.FC = () => {
         </Grid>
       </Box>
     </ThemeProvider>
-    </DefaultLayout>
+  
   );
 };
 
