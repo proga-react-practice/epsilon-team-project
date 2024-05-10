@@ -7,7 +7,7 @@ import Switch from "@mui/material/Switch";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import { ThemeProvider } from "@mui/material/styles";
-import DefaultLayout from "../components/layout/deafoltlayout";
+
 
 const Customers: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -28,7 +28,7 @@ const Customers: React.FC = () => {
   const theme = darkMode ? darkTheme : lightTheme;
 
   return (
-    <DefaultLayout>
+  
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Box
@@ -67,7 +67,7 @@ const Customers: React.FC = () => {
           </Box>
         </Box>
       </ThemeProvider>
-    </DefaultLayout>
+  
   );
 };
 
