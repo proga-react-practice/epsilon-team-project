@@ -4,7 +4,7 @@ import Freelancers from './Pages/Vova';
 import Customers from './Pages/Maks';
 import NotFoundPage from './components/404/404'; 
 import { DEFAULT_ROUTE, HOME_ROUTE, FREELANCERS_ROUTE, CUSTOMERS_ROUTE } from "./routes";
-import DefaultLayout from "./layout/layout"; 
+import DefaultLayout from "./components/layout/layout"; 
 
 const Router = () => {
   return (
