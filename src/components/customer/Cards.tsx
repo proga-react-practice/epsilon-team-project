@@ -1,13 +1,7 @@
 import React from "react";
-import {
-  Typography,
-  Button,
-  Box,
-  Card,
-  CardContent,
-  CardActions,
-} from "@mui/material";
+import { Typography, Box, Card, CardContent, IconButton } from "@mui/material";
 import { styled, keyframes } from "@mui/system";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { Project } from "./Utils";
 
 const cardSlideIn = keyframes`
@@ -20,11 +14,10 @@ const cardSlideIn = keyframes`
 `;
 
 const StyledCard = styled(Card)(({ theme }) => ({
-  width: 300,
-  height: 500,
-  margin: theme.spacing(1),
-  borderRadius: theme.shape.borderRadius * 2,
-  boxShadow: theme.shadows[3],
+  width: "500px",
+  height: "auto",
+  marginBottom: theme.spacing(3),
+  borderRadius: theme.shape.borderRadius,
   backgroundColor: theme.palette.background.default,
   animation: `${cardSlideIn} 0.5s ease-out`,
   [theme.breakpoints.down("sm")]: {
@@ -33,20 +26,10 @@ const StyledCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-const StyledCardContent = styled(CardContent)({
-  flexGrow: 1,
-});
-
-const Technology = styled(Typography)(({ theme }) => ({
-  fontWeight: theme.typography.fontWeightBold,
-  fontStyle: "italic",
-  color: theme.palette.text.primary,
-}));
-
 const CardsContainer = styled(Box)(({ theme }) => ({
   display: "flex",
+  flexDirection: "column",
   flexWrap: "wrap",
-  justifyContent: "center",
   padding: theme.spacing(2),
   width: "100%",
   backgroundColor: theme.palette.background.default,
@@ -58,37 +41,69 @@ const CardsContainer = styled(Box)(({ theme }) => ({
 const Cards: React.FC<{
   projects: Project[];
   deleteProject: (id: number) => void;
-  darkMode: boolean;
 }> = ({ projects, deleteProject }) => {
   return (
     <CardsContainer>
-      <Typography variant="h2" sx={{ fontSize: 25, fontWeight: "bold" }}>
+      <Typography
+        variant="h2"
+        sx={{
+          fontSize: 40,
+          fontWeight: 600,
+          fontFamily: "Montserrat",
+          marginBottom: "18px",
+          color: "primary.main",
+        }}
+      >
         Project Orders:
       </Typography>
       {projects.map((project) => (
         <StyledCard key={project.id}>
-          <StyledCardContent>
-            <Typography variant="h3">{project.name}</Typography>
-            <Typography>
-              <Technology>Description:</Technology> {project.description}
-            </Typography>
-            <Typography>
-              <Technology>Deadline:</Technology> {project.deadline}
-            </Typography>
-            <Typography>
-              <Technology>Technologies:</Technology>{" "}
-              {project.technologies.join(", ")}
-            </Typography>
-          </StyledCardContent>
-          <CardActions>
-            <Button
-              onClick={() => deleteProject(project.id)}
-              variant="contained"
-              color="primary"
-            >
-              Delete
-            </Button>
-          </CardActions>
+          <CardContent sx={{ p: 2, display: "flex" }}>
+            <Box sx={{ flex: 1 }}>
+              <Typography
+                variant="h5"
+                sx={{
+                  mb: 1,
+                  fontFamily: "Montserrat",
+                  fontWeight: 600,
+                }}
+              >
+                {project.name}
+              </Typography>
+              <Typography sx={{ mt: "12px", fontFamily: "Montserrat" }}>
+                <Box component="span" sx={{ fontWeight: 600 }}>
+                  Description:
+                </Box>{" "}
+                {project.description}
+              </Typography>
+              <Typography sx={{ mt: "12px", fontFamily: "Montserrat" }}>
+                <Box component="span" sx={{ fontWeight: 600 }}>
+                  Deadline:
+                </Box>{" "}
+                {project.deadline}
+              </Typography>
+              <Typography
+                sx={{
+                  mt: "12px",
+                  fontFamily: "Montserrat",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <Box component="span" sx={{ fontWeight: 600 }}>
+                  Technologies:
+                </Box>{" "}
+                {project.technologies.join(", ")}
+              </Typography>
+            </Box>
+            <Box>
+              <IconButton
+                onClick={() => deleteProject(project.id)}
+                color="primary"
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Box>
+          </CardContent>
         </StyledCard>
       ))}
     </CardsContainer>

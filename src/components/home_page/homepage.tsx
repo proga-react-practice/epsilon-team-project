@@ -2,6 +2,7 @@ import React from 'react';
 import { Typography, Button, Box, Link, Grid } from '@mui/material';
 
 
+
 const Home: React.FC = () => { 
   return (
       <Grid container spacing={2} sx={{
@@ -24,28 +25,28 @@ const Home: React.FC = () => {
               a posuere quam scelerisque.
             </Typography>
 
-            <Box sx={{ display: 'flex', mt: 4 }}>
-              <Link href="/maks" underline="none">
-                <Button variant="contained" color="primary" sx={{ height: { xs: '40px', md: '45px', color:'whitesmoke' }, fontFamily: "Montserrat", mr: { xs: '6px', md: '12px' }, fontSize: { xs: '12px', md: '14px' } }}>
-                  Пропоную роботу
-                </Button>
-              </Link>
+                <Box sx={{ display: 'flex', mt: 4 }}>
+                  <Link href="/maks" underline="none">
+                    <Button variant="contained" color="primary" sx={{ height: { xs: '40px', md: '45px', color:'whitesmoke' }, fontFamily: "Montserrat", mr: { xs: '6px', md: '12px' }, fontSize: { xs: '12px', md: '14px' } }}>
+                      Пропоную роботу
+                    </Button>
+                  </Link>
 
-              <Link href="/vova" underline="none">
-                <Button variant="contained" color="primary" sx={{ height: { xs: '40px', md: '45px', color:'whitesmoke' }, fontFamily: "Montserrat", fontSize: { xs: '12px', md: '14px' } }} >
-                  Пропоную послуги
-                </Button>
-              </Link>
-            </Box>
-          </Box>
-        </Grid>
+                  <Link href="/vova" underline="none">
+                    <Button variant="contained" color="primary" sx={{ height: { xs: '40px', md: '45px', color:'whitesmoke' }, fontFamily: "Montserrat", fontSize: { xs: '12px', md: '14px' } }} >
+                      Пропоную послуги
+                    </Button>
+                  </Link>
+                </Box>
+              </Box>
+            </Grid>
 
-        <Grid item xs={12} md={4}>
-          <Box sx={{ mt: { xs: '40px', md: '100px' }, ml: '10px', display: 'flex', mr:'10px' }}>
-            <img src="home10.png" alt="fff" style={{ maxWidth: '500px', height: 'auto' }} />
-          </Box>
-        </Grid>
-      </Grid>
+            <Grid item xs={12} md={6}>
+              <Box sx={{ mt: { xs: '40px', md: '100px' }, ml: '40px', display: 'flex', mr:'10px' }}>
+                <img src="home10.png" alt="fff" style={{ maxWidth: '100%', height: 'auto' }} />
+              </Box>
+            </Grid>
+          </Grid>  
   );
 };
 
