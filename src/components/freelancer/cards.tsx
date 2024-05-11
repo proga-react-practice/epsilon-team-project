@@ -11,7 +11,7 @@ interface Props {
 
 const FreelancerList: React.FC<Props> = ({ freelancers, onDelete }) => {
   return (
-    <Box sx={{ ml:'16%', mt:'10%' }}>
+    <Box sx={{mt:'10%' }}>
       <Typography sx={{ fontSize: '40px', marginBottom: '18px', fontFamily:'Montserrat', fontWeight:'600'}} color="primary">Registered Freelancers</Typography>
       {freelancers.map((freelancer, index) => (
         <Card key={index} className="freelancer-card" sx={{width:'500px', mb:'24px', height:'180px'}}>

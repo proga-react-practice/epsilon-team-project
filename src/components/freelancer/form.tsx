@@ -84,7 +84,7 @@ const RegistrationForm: React.FC<Props> = ({ setFreelancers }) => {
   };
   
   return (
-    <Box sx={{ml:'16%', mt:'10%',width:'495px'}} color="secondary"> 
+    <Box sx={{mt:'10%',width:'50%'}} color="secondary"> 
       <Typography style={{ fontSize: '40px', marginBottom: '18px', fontFamily:'Montserrat',marginLeft:'-18px'}} color="primary"><strong>Freelancer Registration</strong></Typography>
       <form onSubmit={handleSubmit}>
         <FormGroup>
