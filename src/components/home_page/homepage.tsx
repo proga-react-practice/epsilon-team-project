@@ -2,16 +2,17 @@ import React from 'react';
 import { Typography, Button, Box, Link, Grid } from '@mui/material';
 
 
-const Home: React.FC = () => {
+const Home: React.FC = () => { 
   return (
-    <Box
-      sx={{
+      <Grid container spacing={2} sx={{
         padding: '20px',
         minHeight: '100vh',
-         
-      }}
-    >
-      <Grid container spacing={2}>
+        display:'flex', 
+        flexDirection:'row', 
+        justifyContent:'center', 
+        width:'100%',
+        
+      }}>
         <Grid item xs={12} md={6}>
           <Box sx={{ mt: { xs: '40px', md: '190px' } }}>
             <Typography variant="h4" gutterBottom sx={{ fontFamily: "Montserrat", fontWeight: 'bold', fontSize: { xs: '24px', md: '48px' } }} color="primary">
@@ -39,13 +40,12 @@ const Home: React.FC = () => {
           </Box>
         </Grid>
 
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={4}>
           <Box sx={{ mt: { xs: '40px', md: '100px' }, ml: '10px', display: 'flex', mr:'10px' }}>
             <img src="home10.png" alt="fff" style={{ maxWidth: '500px', height: 'auto' }} />
           </Box>
         </Grid>
       </Grid>
-    </Box>
   );
 };
 

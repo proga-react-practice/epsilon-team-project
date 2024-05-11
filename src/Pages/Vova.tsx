@@ -17,9 +17,10 @@ const Freelancers: React.FC = () => {
   return (
       <Box sx={{
         padding: '20px',
-        minHeight: '100vh', 
+        minHeight: '100vh',
+        width:'100%' 
       }}>
-        <Grid container justifyContent="center"   spacing={22}>
+        <Grid container sx={{display:'flex', justifyContent:'space-between'}}>
           <Grid item xs={12} md={6} lg={4}>
             <RegistrationForm setFreelancers={setFreelancers} />
           </Grid>

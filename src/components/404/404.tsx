@@ -16,6 +16,7 @@ const NotFoundPage = () => {
         textAlign: 'center',
         backgroundColor: 'background.default',
         padding: prefersSmallerScreen ? '10px' : '20px', 
+        
       }}
     >
       <img src={doggif} alt="404 Not Found" style={{ width: prefersSmallerScreen ? '250px' : '350px', height: prefersSmallerScreen ? '250px' : '350px', marginBottom: prefersSmallerScreen ? '20px' : '40px' }} />
