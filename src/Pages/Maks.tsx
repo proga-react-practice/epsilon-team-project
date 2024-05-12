@@ -15,13 +15,24 @@ const Customers: React.FC = () => {
     setProjects(projects.filter((project) => project.id !== id));
   };
 
+  const updateProject = (id: number, updatedProject: Project) => {
+    setProjects(
+      projects.map((project) => (project.id === id ? updatedProject : project))
+    );
+  };
+
   return (
     <Grid container spacing={3} justifyContent="center">
       <Grid item xs={12} md={6}>
         <AddOrderForm addProject={addProject} />
       </Grid>
       <Grid item xs={12} md={6}>
-        <Cards projects={projects} deleteProject={deleteProject} />
+        <Cards
+          projects={projects}
+          deleteProject={deleteProject}
+          updateProject={updateProject}
+          setProjects={setProjects}
+        />
       </Grid>
     </Grid>
   );
