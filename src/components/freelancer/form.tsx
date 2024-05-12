@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { TextField, Button, InputLabel, FormGroup, Box, Typography } from '@mui/material';
 import SkillsSelect from './SkillSelect';
@@ -10,6 +10,7 @@ interface Props {
 
 const RegistrationForm: React.FC<Props> = ({ setFreelancers }) => {
   const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm<Freelancer>();
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
 
   const onSubmit = (data: Freelancer) => {
     setFreelancers(prevFreelancers => [...prevFreelancers, data]);
@@ -19,8 +20,9 @@ const RegistrationForm: React.FC<Props> = ({ setFreelancers }) => {
       age: 0,
       skills: [],
     });
+    setSelectedSkills([]); 
   };
-  
+
   const ErrorMessage: React.FC<{ message: string }> = ({ message }) => (
     <Typography variant="caption" color="error" sx={{ mt: 0.5 }}>{message}</Typography>
   );
@@ -32,12 +34,12 @@ const RegistrationForm: React.FC<Props> = ({ setFreelancers }) => {
         <FormGroup>
           <Box sx={{ mb: '16px' }} >
             <InputLabel htmlFor="firstName" sx={{ fontFamily: 'Montserrat' }}>First Name:</InputLabel>
-            <TextField type="text" sx={{ width: "450px" }} id="firstName" {...register('firstName', { required: 'Please enter your first name.', pattern: { value: /^[\p{L}\s]+$/u, message: 'First name should contain only letters.' } })} /><br></br>
+            <TextField type="text" sx={{ width: "450px" }} id="firstName" {...register('firstName', { required: 'Please enter your first name.', pattern: { value: /^[\p{L}\s]+$/u, message: 'First name should contain only letters.' }, minLength: { value: 2, message: 'First name should be at least 2 characters long.' }, maxLength: { value: 50, message: 'First name cannot exceed 50 characters.' } })} /><br></br>
             {errors.firstName && errors.firstName.message && <ErrorMessage message={errors.firstName.message} />}
           </Box>
           <Box sx={{ mb: '12px' }}>
             <InputLabel htmlFor="lastName" sx={{ fontFamily: 'Montserrat' }}>Last Name:</InputLabel>
-            <TextField type="text" sx={{ width: "450px", }} id="lastName" {...register('lastName', { required: 'Please enter your last name.', pattern: { value: /^[\p{L}\s]+$/u, message: 'Last name should contain only letters.' } })} /><br></br>
+            <TextField type="text" sx={{ width: "450px", }} id="lastName" {...register('lastName', { required: 'Please enter your last name.', pattern: { value: /^[\p{L}\s]+$/u, message: 'Last name should contain only letters.' }, minLength: { value: 2, message: 'Last name should be at least 2 characters long.' }, maxLength: { value: 50, message: 'Last name cannot exceed 50 characters.' } })} /><br></br>
             {errors.lastName && errors.lastName.message && <ErrorMessage message={errors.lastName.message} />}
           </Box>
           <Box sx={{ mb: '12px' }}>
@@ -47,8 +49,11 @@ const RegistrationForm: React.FC<Props> = ({ setFreelancers }) => {
           </Box>
           <InputLabel htmlFor="skills" sx={{ fontFamily: 'Montserrat' }}>Skills:</InputLabel>
           <SkillsSelect
-            selectedSkills={[]} 
-            onSkillsChange={(skills) => setValue('skills', skills)}
+            selectedSkills={selectedSkills} 
+            onSkillsChange={(skills) => {
+              setSelectedSkills(skills);
+              setValue('skills', skills); 
+            }}
             {...register('skills', { required: 'Please select at least one skill.' })} 
           /> 
           {errors.skills && errors.skills.message && <ErrorMessage message={errors.skills.message} />}

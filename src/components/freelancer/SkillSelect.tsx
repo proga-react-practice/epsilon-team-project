@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MenuItem, Select, InputLabel, FormControl, SelectChangeEvent } from '@mui/material';
 
 interface SkillsSelectProps {
@@ -14,11 +14,15 @@ const SkillsSelect: React.FC<SkillsSelectProps> = ({ selectedSkills, onSkillsCha
     'React',
     'Node.js',
     'Django',
-    'Delfi',
+    'TypeScript',
     'SQL'
   ];
 
   const [selected, setSelected] = useState<string[]>(selectedSkills);
+
+  useEffect(() => {
+    setSelected(selectedSkills); 
+  }, [selectedSkills]);
 
   const handleChange = (event: SelectChangeEvent<string[]>) => {
     const selectedSkills = event.target.value as string[];
@@ -27,7 +31,7 @@ const SkillsSelect: React.FC<SkillsSelectProps> = ({ selectedSkills, onSkillsCha
   };
 
   return (
-    <FormControl sx={{height:'48px',width:"450px"}}>
+    <FormControl sx={{ height: '48px', width: "450px" }}>
       <InputLabel id="skills-label" style={{ cursor: 'pointer' }}></InputLabel>
       <Select
         labelId="skills-label"

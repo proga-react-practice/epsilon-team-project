@@ -2,7 +2,6 @@ import React from 'react';
 import { Typography, Button, Box, Link, Grid } from '@mui/material';
 
 
-
 const Home: React.FC = () => { 
   return (
       <Grid container spacing={2} sx={{
