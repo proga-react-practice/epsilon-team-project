@@ -4,23 +4,26 @@ import { TextField, Button, InputLabel, FormGroup, Box, Typography } from '@mui/
 import SkillsSelect from './SkillSelect';
 import { Freelancer } from './Freelancer';
 
-interface Props {
-  setFreelancers: React.Dispatch<React.SetStateAction<Freelancer[]>>;
+interface RegistrationFormProps {
+  onSubmit: (data: Freelancer) => void;
+  initialValues?: Freelancer;
 }
 
-const RegistrationForm: React.FC<Props> = ({ setFreelancers }) => {
-  const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm<Freelancer>();
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSubmit, initialValues }) => {
+  const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm<Freelancer>({
+    defaultValues: initialValues,
+  });
+  const [selectedSkills, setSelectedSkills] = useState<string[]>(initialValues?.skills || []);
 
-  const onSubmit = (data: Freelancer) => {
-    setFreelancers(prevFreelancers => [...prevFreelancers, data]);
+  const handleSubmitForm = (data: Freelancer) => {
+    onSubmit(data);
     reset({
       firstName: '',
       lastName: '',
       age: 0,
       skills: [],
     });
-    setSelectedSkills([]); 
+    setSelectedSkills([]);
   };
 
   const ErrorMessage: React.FC<{ message: string }> = ({ message }) => (
@@ -30,7 +33,7 @@ const RegistrationForm: React.FC<Props> = ({ setFreelancers }) => {
   return (
     <Box sx={{ mt: '10%', width: '50%' }} color="secondary">
       <Typography style={{ fontSize: '40px', marginBottom: '18px', fontFamily: 'Montserrat', marginLeft: '-18px' }} color="primary"><strong>Freelancer Registration</strong></Typography>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(handleSubmitForm)}>
         <FormGroup>
           <Box sx={{ mb: '16px' }} >
             <InputLabel htmlFor="firstName" sx={{ fontFamily: 'Montserrat' }}>First Name:</InputLabel>
@@ -49,13 +52,13 @@ const RegistrationForm: React.FC<Props> = ({ setFreelancers }) => {
           </Box>
           <InputLabel htmlFor="skills" sx={{ fontFamily: 'Montserrat' }}>Skills:</InputLabel>
           <SkillsSelect
-            selectedSkills={selectedSkills} 
+            selectedSkills={selectedSkills}
             onSkillsChange={(skills) => {
               setSelectedSkills(skills);
-              setValue('skills', skills); 
+              setValue('skills', skills);
             }}
-            {...register('skills', { required: 'Please select at least one skill.' })} 
-          /> 
+            {...register('skills', { required: 'Please select at least one skill.' })}
+          />
           {errors.skills && errors.skills.message && <ErrorMessage message={errors.skills.message} />}
           <Button sx={{ mt: '36px', height: '48px', width: "450px", color: 'white', fontSize: '16px', fontFamily: 'Montserrat' }} type="submit" variant="contained" color="primary">Register</Button>
           <Button sx={{ mt: '12px', height: '48px', width: "450px", color: 'white', fontSize: '16px', fontFamily: 'Montserrat' }} type="button" onClick={() => reset()} variant="contained" color="primary">Clear</Button>
