@@ -4,13 +4,13 @@ import {
   TextField,
   Button,
   Checkbox,
-  FormControlLabel,
   FormGroup,
   Box,
+  FormControlLabel,
+  Typography,
 } from "@mui/material";
-import { Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { Project } from "./Utils";
-import { styled } from "@mui/system";
 
 const TechnologiesList: { id: string; name: string }[] = [
   { id: "html", name: "HTML" },
@@ -132,27 +132,34 @@ const AddOrderForm: React.FC<{ addProject: (project: Project) => void }> = ({
               rules={{ required: true }}
               render={({ field }) => (
                 <FormGroup>
-                  {TechnologiesList.map((tech) => (
-                    <FormControlLabel
-                      key={tech.id}
-                      control={
-                        <Checkbox
-                          checked={field.value.includes(tech.id)}
-                          onChange={(_, checked) => {
-                            if (checked) {
-                              field.value.push(tech.id);
-                            } else {
-                              field.value = field.value.filter(
-                                (value) => value !== tech.id
-                              );
-                            }
-                            field.onChange(field.value);
-                          }}
-                        />
-                      }
-                      label={tech.name}
-                    />
-                  ))}
+                  {TechnologiesList.map((tech) => {
+                    const StyledLabel = styled(Typography)(({ theme }) => ({
+                      color:
+                        theme.palette.mode === "dark" ? "white" : "inherit",
+                    }));
+
+                    return (
+                      <FormControlLabel
+                        key={tech.id}
+                        control={
+                          <Checkbox
+                            checked={field.value.includes(tech.id)}
+                            onChange={(_, checked) => {
+                              if (checked) {
+                                field.value.push(tech.id);
+                              } else {
+                                field.value = field.value.filter(
+                                  (value) => value !== tech.id
+                                );
+                              }
+                              field.onChange(field.value);
+                            }}
+                          />
+                        }
+                        label={<StyledLabel>{tech.name}</StyledLabel>}
+                      />
+                    );
+                  })}
                 </FormGroup>
               )}
             />
