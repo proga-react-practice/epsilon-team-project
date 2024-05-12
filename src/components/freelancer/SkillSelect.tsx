@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { MenuItem, Select, InputLabel, FormControl, SelectChangeEvent } from '@mui/material';
 
 interface SkillsSelectProps {
   selectedSkills: string[];
-  onChange: (selectedSkills: string[]) => void;
+  onSkillsChange: (selectedSkills: string[]) => void; 
 }
 
-const SkillsSelect: React.FC<SkillsSelectProps> = ({ selectedSkills, onChange }) => {
+const SkillsSelect: React.FC<SkillsSelectProps> = ({ selectedSkills, onSkillsChange }) => { 
   const skills = [
     'HTML',
     'CSS',
@@ -18,28 +18,28 @@ const SkillsSelect: React.FC<SkillsSelectProps> = ({ selectedSkills, onChange })
     'SQL'
   ];
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [selected, setSelected] = useState<string[]>(selectedSkills);
 
-  const toggleOpen = () => {
-    setIsOpen(!isOpen);
+  const handleChange = (event: SelectChangeEvent<string[]>) => {
+    const selectedSkills = event.target.value as string[];
+    setSelected(selectedSkills);
+    onSkillsChange(selectedSkills);
   };
 
   return (
     <FormControl sx={{height:'48px',width:"450px"}}>
-      <InputLabel id="skills-label" onClick={toggleOpen} style={{ cursor: 'pointer' }}></InputLabel>
+      <InputLabel id="skills-label" style={{ cursor: 'pointer' }}></InputLabel>
       <Select
         labelId="skills-label"
         id="skills-select"
         multiple
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-        onOpen={() => setIsOpen(true)} 
-        value={selectedSkills}
-        onChange={(e) => onChange(e.target.value as string[])}
+        value={selected}
+        onChange={handleChange}
         inputProps={{
           name: 'skills',
           id: 'skills-select',
         }}
+        renderValue={(selected) => (selected as string[]).join(', ')}
       >
         {skills.map((skill, index) => (
           <MenuItem key={index} value={skill}>
