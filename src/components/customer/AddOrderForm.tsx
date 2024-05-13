@@ -4,13 +4,13 @@ import {
   TextField,
   Button,
   Checkbox,
-  FormControlLabel,
   FormGroup,
   Box,
+  FormControlLabel,
+  Typography,
 } from "@mui/material";
-import { Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { Project } from "./Utils";
-import { styled } from "@mui/system";
 
 const TechnologiesList: { id: string; name: string }[] = [
   { id: "html", name: "HTML" },
@@ -82,11 +82,23 @@ const AddOrderForm: React.FC<{ addProject: (project: Project) => void }> = ({
             <Controller
               name="name"
               control={control}
-              rules={{ required: true }}
-              render={({ field }) => (
+              rules={{
+                required: "Project Name is required",
+                minLength: {
+                  value: 6,
+                  message: "Project Name must be at least 6 characters",
+                },
+                maxLength: {
+                  value: 30,
+                  message: "Project Name must not exceed 30 characters",
+                },
+              }}
+              render={({ field, fieldState: { error } }) => (
                 <TextField
                   {...field}
                   required
+                  error={!!error}
+                  helperText={error ? error.message : null}
                   sx={{
                     width: "350px",
                   }}
@@ -94,18 +106,27 @@ const AddOrderForm: React.FC<{ addProject: (project: Project) => void }> = ({
               )}
             />
           </Box>
+
           <Box className="form-group" sx={{ marginBottom: "15px" }}>
             <StyledTypography>Project Description:</StyledTypography>
             <Controller
               name="description"
               control={control}
-              rules={{ required: true }}
-              render={({ field }) => (
+              rules={{
+                required: "Project Description is required",
+                minLength: {
+                  value: 21,
+                  message: "Project Description must be at least 21 characters",
+                },
+              }}
+              render={({ field, fieldState: { error } }) => (
                 <TextField
                   {...field}
                   multiline
                   rows={4}
                   required
+                  error={!!error}
+                  helperText={error ? error.message : null}
                   sx={{
                     width: "350px",
                   }}
@@ -118,9 +139,25 @@ const AddOrderForm: React.FC<{ addProject: (project: Project) => void }> = ({
             <Controller
               name="deadline"
               control={control}
-              rules={{ required: true }}
-              render={({ field }) => (
-                <TextField {...field} type="date" required />
+              rules={{
+                required: true,
+                validate: (value) => {
+                  const currentDate = new Date();
+                  const selectedDate = new Date(value);
+                  return (
+                    selectedDate > currentDate ||
+                    "Deadline must be a future date"
+                  );
+                },
+              }}
+              render={({ field, fieldState: { error } }) => (
+                <TextField
+                  {...field}
+                  type="date"
+                  required
+                  error={!!error}
+                  helperText={error ? error.message : null}
+                />
               )}
             />
           </Box>
@@ -129,30 +166,51 @@ const AddOrderForm: React.FC<{ addProject: (project: Project) => void }> = ({
             <Controller
               name="technologies"
               control={control}
-              rules={{ required: true }}
-              render={({ field }) => (
+              rules={{
+                required: "Select at least one technology",
+                validate: (value) =>
+                  value.length > 0 || "Select at least one technology",
+              }}
+              render={({ field, fieldState: { error } }) => (
                 <FormGroup>
-                  {TechnologiesList.map((tech) => (
-                    <FormControlLabel
-                      key={tech.id}
-                      control={
-                        <Checkbox
-                          checked={field.value.includes(tech.id)}
-                          onChange={(_, checked) => {
-                            if (checked) {
-                              field.value.push(tech.id);
-                            } else {
-                              field.value = field.value.filter(
-                                (value) => value !== tech.id
-                              );
-                            }
-                            field.onChange(field.value);
-                          }}
-                        />
-                      }
-                      label={tech.name}
-                    />
-                  ))}
+                  {TechnologiesList.map((tech) => {
+                    const StyledLabel = styled(Typography)(({ theme }) => ({
+                      color:
+                        theme.palette.mode === "dark" ? "white" : "inherit",
+                    }));
+
+                    return (
+                      <FormControlLabel
+                        key={tech.id}
+                        control={
+                          <Checkbox
+                            checked={field.value.includes(tech.id)}
+                            onChange={(_, checked) => {
+                              let newValue;
+                              if (checked) {
+                                if (field.value.length < 3) {
+                                  newValue = [...field.value, tech.id];
+                                } else {
+                                  newValue = field.value;
+                                }
+                              } else {
+                                newValue = field.value.filter(
+                                  (value) => value !== tech.id
+                                );
+                              }
+                              field.onChange(newValue);
+                            }}
+                          />
+                        }
+                        label={<StyledLabel>{tech.name}</StyledLabel>}
+                      />
+                    );
+                  })}
+                  {error && (
+                    <Typography variant="caption" color="error">
+                      {error.message}
+                    </Typography>
+                  )}
                 </FormGroup>
               )}
             />
