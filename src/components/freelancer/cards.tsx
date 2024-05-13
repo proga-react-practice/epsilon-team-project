@@ -22,7 +22,7 @@ const FreelancerList: React.FC<Props> = ({ freelancers, onDelete, onEdit }) => {
   };
 
   return (
-    <Box sx={{ mt: '2%' }}>
+    <Box sx={{ mt: '18%' }}>
       <Typography sx={{ fontSize: '40px', marginBottom: '5%', fontFamily: 'Montserrat', fontWeight: '600' }} color="primary">
         Registered Freelancers
       </Typography>
@@ -82,7 +82,7 @@ const FreelancerCard: React.FC<{ freelancer: Freelancer; index: number; onDelete
   return (
     <Draggable key={index} draggableId={`${index}`} index={index}>
       {(provided) => (
-        <Box sx={{ mb: '50%' }}>
+        <Box sx={{ mb: '2%' }}>
           <Card
             ref={provided.innerRef}
             {...provided.draggableProps}
@@ -98,7 +98,7 @@ const FreelancerCard: React.FC<{ freelancer: Freelancer; index: number; onDelete
                     label="First Name"
                     value={updatedFreelancer.firstName}
                     onChange={handleChange}
-                    sx={{ mr: '2%' }}
+                    sx={{ mr: '2%', '& .MuiOutlinedInput-root': { '& > fieldset': { border: 'none' } } }}
                   />
                 ) : (
                   <Typography variant="h5" sx={{ fontFamily: 'Montserrat', fontWeight: '600' }}>
@@ -114,7 +114,7 @@ const FreelancerCard: React.FC<{ freelancer: Freelancer; index: number; onDelete
                       <Button onClick={handleSaveClick} color="primary" sx={{ mr: '1%' }}>
                         Save
                       </Button>
-                      <Button onClick={handleCancelClick} color="secondary" sx={{ ml:'26%' }}>
+                      <Button onClick={handleCancelClick} color="secondary" sx={{ ml: '26%' }}>
                         Cancel
                       </Button>
                     </>
@@ -132,7 +132,7 @@ const FreelancerCard: React.FC<{ freelancer: Freelancer; index: number; onDelete
                     label="Last Name"
                     value={updatedFreelancer.lastName}
                     onChange={handleChange}
-                    sx={{ mb: '1%' }}
+                    sx={{ mb: '1%', '& .MuiOutlinedInput-root': { '& > fieldset': { border: 'none' } } }}
                   />
                   <TextField
                     name="age"
@@ -140,7 +140,7 @@ const FreelancerCard: React.FC<{ freelancer: Freelancer; index: number; onDelete
                     type="number"
                     value={updatedFreelancer.age}
                     onChange={handleChange}
-                    sx={{ mb: '1%' }}
+                    sx={{ mb: '1%', '& .MuiOutlinedInput-root': { '& > fieldset': { border: 'none' } } }}
                   />
                   <TextField
                     name="skills"
@@ -148,7 +148,7 @@ const FreelancerCard: React.FC<{ freelancer: Freelancer; index: number; onDelete
                     multiline
                     value={updatedFreelancer.skills.join(', ')}
                     onChange={handleChange}
-                    sx={{ mb: '1%' }}
+                    sx={{ mb: '1%', '& .MuiOutlinedInput-root': { '& > fieldset': { border: 'none' } } }}
                   />
                 </>
               ) : (
