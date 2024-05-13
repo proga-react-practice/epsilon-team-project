@@ -31,7 +31,7 @@ const SkillsSelect: React.FC<SkillsSelectProps> = ({ selectedSkills, onSkillsCha
   };
 
   return (
-    <FormControl sx={{ height: '48px', width: "450px" }}>
+    <FormControl sx={{ height: '48px', width: "90%" }}>
       <InputLabel id="skills-label" style={{ cursor: 'pointer' }}></InputLabel>
       <Select
         labelId="skills-label"

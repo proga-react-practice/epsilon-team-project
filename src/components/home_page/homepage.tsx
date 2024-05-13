@@ -20,8 +20,7 @@ const Home: React.FC = () => {
             </Typography>
 
             <Typography variant="body1" gutterBottom sx={{ maxWidth: '100%', fontFamily: "Montserrat", fontSize: { xs: '16px', md: '24px' } }} color="primary">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vehicula massa nec lacus maximus,
-              a posuere quam scelerisque.
+              Developers: Max, Vova - students of Computer Science, LNU
             </Typography>
 
                 <Box sx={{ display: 'flex', mt: 4 }}>

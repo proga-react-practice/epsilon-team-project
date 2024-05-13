@@ -22,8 +22,8 @@ const FreelancerList: React.FC<Props> = ({ freelancers, onDelete, onEdit }) => {
   };
 
   return (
-    <Box sx={{ mt: '10%' }}>
-      <Typography sx={{ fontSize: '40px', marginBottom: '18px', fontFamily: 'Montserrat', fontWeight: '600' }} color="primary">
+    <Box sx={{ mt: '2%' }}>
+      <Typography sx={{ fontSize: '40px', marginBottom: '5%', fontFamily: 'Montserrat', fontWeight: '600' }} color="primary">
         Registered Freelancers
       </Typography>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -82,23 +82,23 @@ const FreelancerCard: React.FC<{ freelancer: Freelancer; index: number; onDelete
   return (
     <Draggable key={index} draggableId={`${index}`} index={index}>
       {(provided) => (
-        <Box sx={{ mb: '24px' }}>
+        <Box sx={{ mb: '50%' }}>
           <Card
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             className="freelancer-card"
-            sx={{ width: '500px', height: 'auto' }}
+            sx={{ width: '95%', height: 'auto' }}
           >
-            <CardContent sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+            <CardContent sx={{ p: '3%', display: 'flex', flexDirection: 'column' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: '2%' }}>
                 {editing ? (
                   <TextField
                     name="firstName"
                     label="First Name"
                     value={updatedFreelancer.firstName}
                     onChange={handleChange}
-                    sx={{ mr: 1 }}
+                    sx={{ mr: '2%' }}
                   />
                 ) : (
                   <Typography variant="h5" sx={{ fontFamily: 'Montserrat', fontWeight: '600' }}>
@@ -111,10 +111,10 @@ const FreelancerCard: React.FC<{ freelancer: Freelancer; index: number; onDelete
                   </IconButton>
                   {editing ? (
                     <>
-                      <Button onClick={handleSaveClick} color="primary" sx={{ mr: 1 }}>
+                      <Button onClick={handleSaveClick} color="primary" sx={{ mr: '1%' }}>
                         Save
                       </Button>
-                      <Button onClick={handleCancelClick} color="secondary">
+                      <Button onClick={handleCancelClick} color="secondary" sx={{ ml:'26%' }}>
                         Cancel
                       </Button>
                     </>
@@ -132,7 +132,7 @@ const FreelancerCard: React.FC<{ freelancer: Freelancer; index: number; onDelete
                     label="Last Name"
                     value={updatedFreelancer.lastName}
                     onChange={handleChange}
-                    sx={{ mb: 1 }}
+                    sx={{ mb: '1%' }}
                   />
                   <TextField
                     name="age"
@@ -140,7 +140,7 @@ const FreelancerCard: React.FC<{ freelancer: Freelancer; index: number; onDelete
                     type="number"
                     value={updatedFreelancer.age}
                     onChange={handleChange}
-                    sx={{ mb: 1 }}
+                    sx={{ mb: '1%' }}
                   />
                   <TextField
                     name="skills"
@@ -148,18 +148,18 @@ const FreelancerCard: React.FC<{ freelancer: Freelancer; index: number; onDelete
                     multiline
                     value={updatedFreelancer.skills.join(', ')}
                     onChange={handleChange}
-                    sx={{ mb: 1 }}
+                    sx={{ mb: '1%' }}
                   />
                 </>
               ) : (
                 <>
-                  <Typography sx={{ mt: '12px', fontFamily: 'Montserrat' }}>
+                  <Typography sx={{ mt: '2%', fontFamily: 'Montserrat' }}>
                     <Box component="span" sx={{ fontWeight: '600' }}>
                       Age:
                     </Box>{' '}
                     {freelancer.age}
                   </Typography>
-                  <Typography sx={{ mt: '12px', fontFamily: 'Montserrat', whiteSpace: 'normal' }}>
+                  <Typography sx={{ mt: '2%', fontFamily: 'Montserrat', whiteSpace: 'normal' }}>
                     <Box component="span" sx={{ fontWeight: '600' }}>
                       Skills:
                     </Box>{' '}

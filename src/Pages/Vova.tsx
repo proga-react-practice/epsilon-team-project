@@ -31,18 +31,16 @@ const Freelancers: React.FC = () => {
   return (
     <Box
       sx={{
-        minHeight: '100vh',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        ml:'25%' 
       }}
     >
-      <Grid container spacing={3} sx={{ width: '100%' }}>
-        <Grid item xs={12} md={6}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={10} md={6} lg={6} xl={6}>
           <RegistrationForm onSubmit={handleSubmit} />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} sm={10} md={6} lg={6} xl={6}>
           <FreelancerList
             freelancers={freelancers}
             onDelete={handleDelete}

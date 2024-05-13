@@ -29,7 +29,7 @@ const DefaultLayout: FC = () => {
           />
         </Toolbar>
       </AppBar>
-      <Container sx={{minWidth:'100%',display:'flex', flexDirection:'row'}}>
+      <Container sx={{minWidth:'100%',display:'flex', flexDirection:'row',minHeight: '100vh',}}>
         <Outlet /> 
       </Container>
     </Box>
