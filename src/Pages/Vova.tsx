@@ -17,14 +17,11 @@ const Freelancers: React.FC = () => {
     setFreelancers(prevFreelancers => [...prevFreelancers, data]);
   };
 
-  // Update handleEdit function to match the expected signature
   const handleEdit = (updatedFreelancer: Freelancer | Freelancer[], index: number) => {
     if (Array.isArray(updatedFreelancer)) {
-      // Handle array of freelancers
       const updatedFreelancers = [...updatedFreelancer];
       setFreelancers(updatedFreelancers);
     } else {
-      // Handle individual freelancer
       const updatedFreelancers = [...freelancers];
       updatedFreelancers[index] = updatedFreelancer;
       setFreelancers(updatedFreelancers);
@@ -32,12 +29,20 @@ const Freelancers: React.FC = () => {
   };
 
   return (
-    <Box sx={{ minHeight: '100vh', width: '100%' }}>
-      <Grid container sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Grid item xs={12} md={6} lg={4}>
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        ml:'25%' 
+      }}
+    >
+      <Grid container spacing={3} sx={{ width: '100%' }}>
+        <Grid item xs={12} md={6}>
           <RegistrationForm onSubmit={handleSubmit} />
         </Grid>
-        <Grid item xs={12} md={6} lg={5}>
+        <Grid item xs={12} md={6}>
           <FreelancerList
             freelancers={freelancers}
             onDelete={handleDelete}

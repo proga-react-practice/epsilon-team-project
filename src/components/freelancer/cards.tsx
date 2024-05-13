@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Typography, Card, CardContent, Box, Button } from '@mui/material';
+import { Typography, Card, CardContent, Box, Button, TextField } from '@mui/material';
 import { Freelancer } from './Freelancer';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
-import RegistrationForm from './form';
 
 interface Props {
   freelancers: Freelancer[];
@@ -13,19 +12,6 @@ interface Props {
 }
 
 const FreelancerList: React.FC<Props> = ({ freelancers, onDelete, onEdit }) => {
-  const [editIndex, setEditIndex] = useState<number | null>(null);
-
-  const handleEditClick = (index: number) => {
-    setEditIndex(index);
-  };
-
-  const handleEditSubmit = (updatedFreelancer: Freelancer) => {
-    if (editIndex !== null) {
-      onEdit(updatedFreelancer, editIndex);
-      setEditIndex(null);
-    }
-  };
-
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
     const items = Array.from(freelancers);
@@ -45,64 +31,147 @@ const FreelancerList: React.FC<Props> = ({ freelancers, onDelete, onEdit }) => {
           {(provided) => (
             <Box ref={provided.innerRef} {...provided.droppableProps}>
               {freelancers.map((freelancer, index) => (
-                <Draggable key={index} draggableId={`${index}`} index={index}>
-                  {(provided) => (
-                    <Card
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      className="freelancer-card"
-                      sx={{ width: '500px', mb: '24px', height: '180px' }}
-                    >
-                      <CardContent sx={{ p: 2, display: 'flex' }}>
-                        <Box sx={{ flex: 1 }}>
-                          <Typography variant="h5" sx={{ mb: 1, fontFamily: 'Montserrat', fontWeight: '600' }}>
-                            Freelancer {index + 1}
-                          </Typography>
-                          <Typography sx={{ mt: '12px', fontFamily: 'Montserrat' }}>
-                            <Box component="span" sx={{ fontWeight: '600' }}>
-                              Name:
-                            </Box>{' '}
-                            {freelancer.firstName} {freelancer.lastName}
-                          </Typography>
-                          <Typography sx={{ mt: '12px', fontFamily: 'Montserrat' }}>
-                            <Box component="span" sx={{ fontWeight: '600' }}>
-                              Age:
-                            </Box>{' '}
-                            {freelancer.age}
-                          </Typography>
-                          <Typography sx={{ mt: '12px', fontFamily: 'Montserrat', whiteSpace: 'nowrap' }}>
-                            <Box component="span" sx={{ fontWeight: '600' }}>
-                              Skills:
-                            </Box>{' '}
-                            {freelancer.skills.join(', ')}
-                          </Typography>
-                        </Box>
-                        <Box>
-                          <IconButton onClick={() => onDelete(index)} color="primary">
-                            <DeleteIcon />
-                          </IconButton>
-                          <Button onClick={() => handleEditClick(index)} color="primary">
-                            Edit
-                          </Button>
-                        </Box>
-                      </CardContent>
-                    </Card>
-                  )}
-                </Draggable>
+                <FreelancerCard
+                  key={index}
+                  freelancer={freelancer}
+                  index={index}
+                  onDelete={onDelete}
+                  onEdit={onEdit}
+                />
               ))}
               {provided.placeholder}
             </Box>
           )}
         </Droppable>
       </DragDropContext>
-      {editIndex !== null && (
-        <RegistrationForm
-          initialValues={freelancers[editIndex]}
-          onSubmit={handleEditSubmit}
-        />
-      )}
     </Box>
+  );
+};
+
+const FreelancerCard: React.FC<{ freelancer: Freelancer; index: number; onDelete: (index: number) => void; onEdit: (updatedFreelancer: Freelancer, index: number) => void }> = ({
+  freelancer,
+  index,
+  onDelete,
+  onEdit,
+}) => {
+  const [editing, setEditing] = useState(false);
+  const [updatedFreelancer, setUpdatedFreelancer] = useState(freelancer);
+
+  const handleEditClick = () => {
+    setEditing(true);
+  };
+
+  const handleSaveClick = () => {
+    onEdit(updatedFreelancer, index);
+    setEditing(false);
+  };
+
+  const handleCancelClick = () => {
+    setUpdatedFreelancer(freelancer);
+    setEditing(false);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setUpdatedFreelancer({
+      ...updatedFreelancer,
+      [name]: name === 'skills' ? value.split(',').map((skill) => skill.trim()) : value,
+    });
+  };
+
+  return (
+    <Draggable key={index} draggableId={`${index}`} index={index}>
+      {(provided) => (
+        <Box sx={{ mb: '24px' }}>
+          <Card
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            className="freelancer-card"
+            sx={{ width: '500px', height: 'auto' }}
+          >
+            <CardContent sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+                {editing ? (
+                  <TextField
+                    name="firstName"
+                    label="First Name"
+                    value={updatedFreelancer.firstName}
+                    onChange={handleChange}
+                    sx={{ mr: 1 }}
+                  />
+                ) : (
+                  <Typography variant="h5" sx={{ fontFamily: 'Montserrat', fontWeight: '600' }}>
+                    {freelancer.firstName} {freelancer.lastName}
+                  </Typography>
+                )}
+                <Box>
+                  <IconButton onClick={() => onDelete(index)} color="primary">
+                    <DeleteIcon />
+                  </IconButton>
+                  {editing ? (
+                    <>
+                      <Button onClick={handleSaveClick} color="primary" sx={{ mr: 1 }}>
+                        Save
+                      </Button>
+                      <Button onClick={handleCancelClick} color="secondary">
+                        Cancel
+                      </Button>
+                    </>
+                  ) : (
+                    <Button onClick={handleEditClick} color="primary">
+                      Edit
+                    </Button>
+                  )}
+                </Box>
+              </Box>
+              {editing ? (
+                <>
+                  <TextField
+                    name="lastName"
+                    label="Last Name"
+                    value={updatedFreelancer.lastName}
+                    onChange={handleChange}
+                    sx={{ mb: 1 }}
+                  />
+                  <TextField
+                    name="age"
+                    label="Age"
+                    type="number"
+                    value={updatedFreelancer.age}
+                    onChange={handleChange}
+                    sx={{ mb: 1 }}
+                  />
+                  <TextField
+                    name="skills"
+                    label="Skills"
+                    multiline
+                    value={updatedFreelancer.skills.join(', ')}
+                    onChange={handleChange}
+                    sx={{ mb: 1 }}
+                  />
+                </>
+              ) : (
+                <>
+                  <Typography sx={{ mt: '12px', fontFamily: 'Montserrat' }}>
+                    <Box component="span" sx={{ fontWeight: '600' }}>
+                      Age:
+                    </Box>{' '}
+                    {freelancer.age}
+                  </Typography>
+                  <Typography sx={{ mt: '12px', fontFamily: 'Montserrat', whiteSpace: 'normal' }}>
+                    <Box component="span" sx={{ fontWeight: '600' }}>
+                      Skills:
+                    </Box>{' '}
+                    {freelancer.skills.join(', ')}
+                  </Typography>
+                </>
+              )}
+            </CardContent>
+          </Card>
+        </Box>
+      )}
+    </Draggable>
   );
 };
 

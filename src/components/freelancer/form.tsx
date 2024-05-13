@@ -61,7 +61,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSubmit, initialVa
           />
           {errors.skills && errors.skills.message && <ErrorMessage message={errors.skills.message} />}
           <Button sx={{ mt: '36px', height: '48px', width: "450px", color: 'white', fontSize: '16px', fontFamily: 'Montserrat' }} type="submit" variant="contained" color="primary">Register</Button>
-          <Button sx={{ mt: '12px', height: '48px', width: "450px", color: 'white', fontSize: '16px', fontFamily: 'Montserrat' }} type="button" onClick={() => reset()} variant="contained" color="primary">Clear</Button>
+          <Button sx={{ mt: '12px', height: '48px', width: "450px", color: 'white', fontSize: '16px', fontFamily: 'Montserrat' }} type="button" onClick={() => {reset({firstName: '', lastName: '', age: 0, skills: [] }); setSelectedSkills([]);}} variant="contained" color="primary">Clear</Button>
         </FormGroup>
       </form>
     </Box>
