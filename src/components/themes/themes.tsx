@@ -1,4 +1,4 @@
-import { PaletteOptions, createTheme } from '@mui/material/styles';
+import { PaletteOptions, createTheme } from "@mui/material/styles";
 
 interface CustomPaletteOptions extends PaletteOptions {
   customColor1?: {
@@ -11,37 +11,36 @@ interface CustomPaletteOptions extends PaletteOptions {
 
 export const lightTheme = createTheme({
   palette: {
-    mode: 'light',
+    mode: "light",
     primary: {
-      main: '#646BD9',
+      main: "#646BD9",
     },
     secondary: {
-      main: '#FF61F6',
+      main: "#FF61F6",
     },
     background: {
-      default: '#ffffff',
+      default: "#ffffff",
     },
     customColor1: {
-      main: '#ffffff',
+      main: "#ffffff",
     },
-  } as CustomPaletteOptions, 
+  } as CustomPaletteOptions,
 });
-
 
 export const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: "dark",
     primary: {
-      main: '#62D682',
+      main: "#62D682",
     },
     secondary: {
-      main: '#62D682',
+      main: "#62D682",
     },
     background: {
-      default: '#232121',
+      default: "#232121",
     },
     customColor1: {
-      main: '#62D682',
+      main: "#62D682",
     },
-  } as CustomPaletteOptions, 
+  } as CustomPaletteOptions,
 });
