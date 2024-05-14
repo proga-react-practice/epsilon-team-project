@@ -40,7 +40,7 @@ const Freelancers: React.FC = () => {
         },
       }}
     >
-      <Grid container spacing={8}>
+      <Grid container spacing={8} justifyContent={{ xs: 'center', sm: 'center', md: 'flex-start' }}>
         <Grid item xs={12} sm={10} md={6} lg={6} xl={6} >
           <RegistrationForm onSubmit={handleSubmit} />
         </Grid>
