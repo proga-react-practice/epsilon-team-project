@@ -4,7 +4,6 @@ import FreelancerList from '../components/freelancer/cards';
 import { Freelancer } from '../components/freelancer/Freelancer';
 import { Box, Grid } from '@mui/material';
 
-
 const Freelancers: React.FC = () => {
   const [freelancers, setFreelancers] = useState<Freelancer[]>([]);
 
@@ -14,21 +13,46 @@ const Freelancers: React.FC = () => {
     setFreelancers(updatedFreelancers);
   };
 
+  const handleSubmit = (data: Freelancer) => {
+    setFreelancers(prevFreelancers => [...prevFreelancers, data]);
+  };
+
+  const handleEdit = (updatedFreelancer: Freelancer | Freelancer[], index: number) => {
+    if (Array.isArray(updatedFreelancer)) {
+      const updatedFreelancers = [...updatedFreelancer];
+      setFreelancers(updatedFreelancers);
+    } else {
+      const updatedFreelancers = [...freelancers];
+      updatedFreelancers[index] = updatedFreelancer;
+      setFreelancers(updatedFreelancers);
+    }
+  };
+
   return (
-      <Box sx={{
-        padding: '20px',
-        minHeight: '100vh',
-        width:'100%' 
-      }}>
-        <Grid container sx={{display:'flex', justifyContent:'space-between'}}>
-          <Grid item xs={12} md={6} lg={4}>
-            <RegistrationForm setFreelancers={setFreelancers} />
-          </Grid>
-          <Grid item xs={12} md={6} lg={5} >
-            <FreelancerList freelancers={freelancers} onDelete={handleDelete} />
-          </Grid>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        pl: {
+          lg: '18%', 
+          xl: '20%', 
+        },
+      }}
+    >
+      <Grid container spacing={8} justifyContent={{ xs: 'center', sm: 'center', md: 'flex-start' }}>
+        <Grid item xs={12} sm={10} md={6} lg={6} xl={6} >
+          <RegistrationForm onSubmit={handleSubmit} />
         </Grid>
-      </Box>
+        <Grid item xs={12} sm={10} md={6} lg={6} xl={6}>
+          <FreelancerList
+            freelancers={freelancers}
+            onDelete={handleDelete}
+            onEdit={handleEdit}
+          />
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 
