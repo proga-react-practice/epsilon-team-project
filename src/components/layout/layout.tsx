@@ -38,3 +38,4 @@ const DefaultLayout: FC = () => {
 };
 
 export default DefaultLayout;
+
