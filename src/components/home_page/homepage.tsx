@@ -14,6 +14,7 @@ const Home: React.FC = () => {
           lg: '10%', 
           xl: '10%', 
         },
+        height:'100%'
         
       }}>
         <Grid item xs={12} sm={10} md={6} lg={6} xl={6}>
@@ -44,7 +45,7 @@ const Home: React.FC = () => {
 
             <Grid item xs={12} sm={10} md={6} lg={6} xl={6}>
               <Box sx={{ mt: { xs: '2%', md: '12%' }, ml: '12%', display: 'flex', mr:'10%' }}>
-                <img src="home10.png" alt="fff" style={{ maxWidth: '80%' }} />
+                <img src="home10.png" alt="fff" style={{ maxWidth: '100%' }} />
               </Box>
             </Grid>
           </Grid>  
