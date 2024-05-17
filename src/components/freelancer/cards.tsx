@@ -4,23 +4,32 @@ import { Freelancer } from './Freelancer';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
+import { useFreelancerContext } from '../context/FreelancerContext';
 
+const FreelancerList: React.FC = () => {
+  const { freelancers, deleteFreelancer, updateFreelancer } = useFreelancerContext()!;
 
-
-interface Props {
-  freelancers: Freelancer[];
-  onDelete: (index: number) => void;
-  onEdit: (updatedFreelancer: Freelancer | Freelancer[], index: number) => void;
-}
-
-const FreelancerList: React.FC<Props> = ({ freelancers, onDelete, onEdit }) => {
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
     const items = Array.from(freelancers);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     const reorderedFreelancers = items;
-    onEdit(reorderedFreelancers, -1);
+    updateFreelancer(reorderedFreelancers);
+  };
+
+  const handleDelete = (index: number) => {
+    deleteFreelancer(index);
+  };
+
+  const handleEdit = (updatedFreelancer: Freelancer | Freelancer[], index: number) => {
+    if (Array.isArray(updatedFreelancer)) {
+      updatedFreelancer.forEach((freelancer, i) => {
+        updateFreelancer(freelancer, i);
+      });
+    } else {
+      updateFreelancer(updatedFreelancer, index);
+    }
   };
 
   return (
@@ -37,8 +46,8 @@ const FreelancerList: React.FC<Props> = ({ freelancers, onDelete, onEdit }) => {
                   key={index}
                   freelancer={freelancer}
                   index={index}
-                  onDelete={onDelete}
-                  onEdit={onEdit}
+                  onDelete={handleDelete}
+                  onEdit={handleEdit}
                 />
               ))}
               {provided.placeholder}
@@ -50,12 +59,17 @@ const FreelancerList: React.FC<Props> = ({ freelancers, onDelete, onEdit }) => {
   );
 };
 
-const FreelancerCard: React.FC<{ freelancer: Freelancer; index: number; onDelete: (index: number) => void; onEdit: (updatedFreelancer: Freelancer, index: number) => void }> = ({
+const FreelancerCard: React.FC<{
+  freelancer: Freelancer;
+  index: number;
+  onDelete: (index: number) => void;
+  onEdit: (updatedFreelancer: Freelancer | Freelancer[], index: number) => void;
+}> = ({
   freelancer,
   index,
   onDelete,
   onEdit,
-}) => {
+  }) => {
   const [editing, setEditing] = useState(false);
   const [updatedFreelancer, setUpdatedFreelancer] = useState(freelancer);
 

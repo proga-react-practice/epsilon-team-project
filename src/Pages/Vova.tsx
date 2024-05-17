@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import RegistrationForm from '../components/freelancer/form';
-import { FreelancerContext } from '../context/FreelancerContext';
+import { FreelancerContext } from '../components/context/FreelancerContext';
 import { Freelancer } from '../components/freelancer/Freelancer';
 import { Box, Grid } from '@mui/material';
 

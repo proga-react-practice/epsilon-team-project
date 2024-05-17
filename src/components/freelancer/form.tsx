@@ -3,20 +3,21 @@ import { useForm } from 'react-hook-form';
 import { TextField, Button, InputLabel, FormGroup, Box, Typography } from '@mui/material';
 import SkillsSelect from './SkillSelect';
 import { Freelancer } from './Freelancer';
+import { useFreelancerContext } from '../context/FreelancerContext';
 
 interface RegistrationFormProps {
-  onSubmit: (data: Freelancer) => void;
   initialValues?: Freelancer;
 }
 
-const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSubmit, initialValues }) => {
+const RegistrationForm: React.FC<RegistrationFormProps> = ({ initialValues }) => {
   const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm<Freelancer>({
     defaultValues: initialValues,
   });
   const [selectedSkills, setSelectedSkills] = useState<string[]>(initialValues?.skills || []);
+  const { registerFreelancer } = useFreelancerContext()!;
 
   const handleSubmitForm = (data: Freelancer) => {
-    onSubmit(data);
+    registerFreelancer(data);
     reset({
       firstName: '',
       lastName: '',
