@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 
 
+
 interface Props {
   freelancers: Freelancer[];
   onDelete: (index: number) => void;
@@ -106,7 +107,7 @@ const FreelancerCard: React.FC<{ freelancer: Freelancer; index: number; onDelete
                     {freelancer.firstName} {freelancer.lastName}
                   </Typography>
                 )}
-                <Box>
+                <Box >
                   <IconButton onClick={() => onDelete(index)} color="primary">
                     <DeleteIcon />
                   </IconButton>
@@ -120,7 +121,7 @@ const FreelancerCard: React.FC<{ freelancer: Freelancer; index: number; onDelete
                       </Button>
                     </>
                   ) : (
-                    <Button onClick={handleEditClick} color="primary">
+                    <Button onClick={handleEditClick} color="primary"  >
                       Edit
                     </Button>
                   )}

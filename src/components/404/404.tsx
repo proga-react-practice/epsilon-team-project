@@ -9,7 +9,7 @@ const NotFoundPage = () => {
         flexDirection: 'column',
         alignItems: 'center',
         textAlign: 'center',
-        pl: { lg: '18%',  xl: '20%'},
+        pl: { lg: '15%',  xl: '15%'},
         mt: { xs: '10%', sm: '10%', md: '10%', lg: '10%', xl: '10%'},
 
       }}

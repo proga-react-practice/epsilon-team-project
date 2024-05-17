@@ -29,7 +29,7 @@ const Home: React.FC = () => {
 
                 <Box sx={{ display: 'flex', mt:"4%" }}>
                   <Link href="/maks" underline="none">
-                    <Button variant="contained" color="primary" sx={{ height: { xs: '40px', md: '100%', color:'whitesmoke' }, fontFamily: "Montserrat", mr: { xs: '6px', md: '12px' }, fontSize: { xs: '8px', md: '14px' } }}>
+                    <Button variant="contained" color="primary" sx={{ height: { xs: '40px', md: '100%', color:'whitesmoke', }, fontFamily: "Montserrat", mr: { xs: '6px', md: '12px' }, fontSize: { xs: '8px', md: '14px' },   }}>
                       Пропоную роботу
                     </Button>
                   </Link>
