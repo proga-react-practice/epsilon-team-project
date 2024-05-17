@@ -6,10 +6,12 @@ interface FreelancerContextValue {
   registerFreelancer: (freelancer: Freelancer) => void;
   deleteFreelancer: (index: number) => void;
   updateFreelancer: (updatedFreelancers: Freelancer[] | Freelancer, index?: number) => void;
+  
 }
 
 export const FreelancerContext = createContext<FreelancerContextValue | null>(null);
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useFreelancerContext = () => {
   const context = useContext(FreelancerContext);
   if (!context) {

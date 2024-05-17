@@ -7,6 +7,7 @@ import { useFreelancerContext } from '../context/FreelancerContext';
 
 interface RegistrationFormProps {
   initialValues?: Freelancer;
+  onSubmit: (data: Freelancer) => void;
 }
 
 const RegistrationForm: React.FC<RegistrationFormProps> = ({ initialValues }) => {

@@ -33,10 +33,7 @@ const FreelancerList: React.FC = () => {
   };
 
   return (
-    <Box sx={{ mt: '18%' }}>
-      <Typography sx={{ fontSize: '40px', marginBottom: '5%', fontFamily: 'Montserrat', fontWeight: '600' }} color="primary">
-        Registered Freelancers
-      </Typography>
+    <Box sx={{ ml: '10%' }}>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="freelancers">
           {(provided) => (

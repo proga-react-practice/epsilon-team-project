@@ -1,19 +1,32 @@
+// FreelancerListPage.tsx
+import { Box, Grid, Typography } from '@mui/material';
 import FreelancerList from '../components/freelancer/cards';
-import { Box, Grid } from '@mui/material';
-import { useFreelancerContext } from '../components/context/FreelancerContext';
 
 const FreelancerListPage = () => {
-  const { freelancers, deleteFreelancer, updateFreelancer } = useFreelancerContext()!;
-
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', pl: { lg: '18%', xl: '20%' } }}>
-      <Grid container spacing={8} justifyContent={{ xs: 'center', sm: 'center', md: 'flex-start' }}>
-        <Grid item xs={12} sm={10} md={6} lg={6} xl={6}>
-          <FreelancerList
-            freelancers={freelancers}
-            onDelete={deleteFreelancer}
-            onEdit={updateFreelancer}
-          />
+    <Box sx={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      alignItems: 'center', 
+      pt: '5%', 
+      pl: { xs: '0%', md: '10%' } 
+    }}>
+      <Grid container spacing={4} justifyContent="center">
+        <Grid item xs={12}>
+          <Typography 
+            sx={{ 
+              fontSize: { xs: '30px', sm: '35px', md: '40px', lg: '45px', xl: '50px' }, 
+              fontFamily: 'Montserrat', 
+              fontWeight: '900', 
+              textAlign: { xs: 'center', md: 'left' }  
+            }} 
+            color="primary"
+          >
+            Registered Freelancers
+          </Typography>
+        </Grid>
+        <Grid item xs={12} sm={10} md={10} lg={10} xl={10}>
+          <FreelancerList />
         </Grid>
       </Grid>
     </Box>
