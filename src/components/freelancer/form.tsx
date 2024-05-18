@@ -34,7 +34,6 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ initialValues }) =>
 
   return (
     <Box sx={{ mt: '10%', width: '100%' }} color="secondary">
-      <Typography style={{ fontSize: '40px', marginBottom: '5%', fontFamily: 'Montserrat' }} color="primary"><strong>Freelancer Registration</strong></Typography>
       <form onSubmit={handleSubmit(handleSubmitForm)}>
         <FormGroup>
           <Box sx={{ mb: '2%' }} >
