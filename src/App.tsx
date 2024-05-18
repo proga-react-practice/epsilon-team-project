@@ -1,16 +1,17 @@
 import { FC } from "react";
-import { BrowserRouter } from "react-router-dom"; 
+import { BrowserRouter } from "react-router-dom";
 import Router from "./AppRouter";
-import { FreelancerProvider } from './components/context/FreelancerContext';
-
+import { FreelancerProvider } from "./components/context/FreelancerContext";
+import { CustomerProvider } from "./components/context/CustomerContext";
 const App: FC = () => {
-
-return(
-  <FreelancerProvider>
-    <BrowserRouter> 
-       <Router />     
-    </BrowserRouter>
-  </FreelancerProvider>
+  return (
+    <CustomerProvider>
+      <FreelancerProvider>
+        <BrowserRouter>
+          <Router />
+        </BrowserRouter>
+      </FreelancerProvider>
+    </CustomerProvider>
   );
 };
 
