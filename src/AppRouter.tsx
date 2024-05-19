@@ -1,10 +1,11 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from './components/home_page/homepage';
-import Freelancers from './Pages/Vova';
+import RegistrationPage from './Pages/Vova';
 import Customers from './Pages/Maks';
 import NotFoundPage from './components/404/404'; 
-import { DEFAULT_ROUTE, HOME_ROUTE, FREELANCERS_ROUTE, CUSTOMERS_ROUTE } from "./routes";
+import { DEFAULT_ROUTE, HOME_ROUTE, FREELANCERS_ROUTE, CUSTOMERS_REG_ROUTE, FREELANCERS_REG_ROUTE  } from "./routes";
 import DefaultLayout from "./components/layout/layout"; 
+import FreelancerListPage from "./Pages/Freelancers"
 
 const Router = () => {
   return (
@@ -12,8 +13,9 @@ const Router = () => {
       <Route path={DEFAULT_ROUTE} element={<DefaultLayout />}>
         <Route index element={<Navigate to={HOME_ROUTE} replace />} />
         <Route path={HOME_ROUTE} element={<Home />} />
-        <Route path={FREELANCERS_ROUTE} element={<Freelancers />} />
-        <Route path={CUSTOMERS_ROUTE} element={<Customers />} />
+        <Route path={FREELANCERS_ROUTE} element={<FreelancerListPage />} />
+        <Route path={FREELANCERS_REG_ROUTE} element={<RegistrationPage />} />
+        <Route path={CUSTOMERS_REG_ROUTE} element={<Customers />} />
         <Route path="*" element={<NotFoundPage />} /> 
       </Route>
     </Routes>

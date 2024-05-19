@@ -1,178 +1,156 @@
 import React, { useState } from 'react';
-import { Typography, Card, CardContent, Box, Button, TextField } from '@mui/material';
+import { Typography, Card, CardContent, Box, Button } from '@mui/material';
 import { Freelancer } from './Freelancer';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
+import { useFreelancerContext } from '../context/FreelancerContext';
+import EditFreelancerDialog from "../freelancer/EditFreelancer"
 
+const FreelancerList: React.FC = () => {
+  const { freelancers, deleteFreelancer, updateFreelancer } = useFreelancerContext()!;
 
-interface Props {
-  freelancers: Freelancer[];
-  onDelete: (index: number) => void;
-  onEdit: (updatedFreelancer: Freelancer | Freelancer[], index: number) => void;
-}
-
-const FreelancerList: React.FC<Props> = ({ freelancers, onDelete, onEdit }) => {
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
     const items = Array.from(freelancers);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     const reorderedFreelancers = items;
-    onEdit(reorderedFreelancers, -1);
+    updateFreelancer(reorderedFreelancers);
+  };
+
+  const handleDelete = (index: number) => {
+    deleteFreelancer(index);
+  };
+
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [editingFreelancer, setEditingFreelancer] = useState<Freelancer | null>(null);
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+
+  const handleOpenEditDialog = (freelancer: Freelancer, index: number) => {
+    setEditingFreelancer(freelancer);
+    setEditingIndex(index);
+    setOpenEditDialog(true);
+  };
+
+  const handleCloseEditDialog = () => {
+    setOpenEditDialog(false);
+    setEditingFreelancer(null);
+    setEditingIndex(null);
+  };
+
+  const handleSaveEdit = (updatedFreelancer: Freelancer) => {
+    if (editingIndex !== null) {
+      updateFreelancer(updatedFreelancer, editingIndex);
+    } else {
+      updateFreelancer([...freelancers, updatedFreelancer]);
+    }
+    handleCloseEditDialog();
   };
 
   return (
-    <Box sx={{ mt: '18%' }}>
-      <Typography sx={{ fontSize: '40px', marginBottom: '5%', fontFamily: 'Montserrat', fontWeight: '600' }} color="primary">
-        Registered Freelancers
-      </Typography>
+    <Box sx={{ ml: '10%' }}>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="freelancers">
-          {(provided) => (
-            <Box ref={provided.innerRef} {...provided.droppableProps}>
+          {(provided, snapshot) => (
+            <Box
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              style={{
+                height: snapshot.isDraggingOver ? 'auto' : '100%',
+                overflowY: 'auto',
+              }}
+            >
               {freelancers.map((freelancer, index) => (
-                <FreelancerCard
-                  key={index}
-                  freelancer={freelancer}
-                  index={index}
-                  onDelete={onDelete}
-                  onEdit={onEdit}
-                />
+                <Draggable key={index} draggableId={`${index}`} index={index}>
+                  {(provided, snapshot) => (
+                    <Box
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      style={{
+                        ...provided.draggableProps.style,
+                        height: snapshot.isDragging ? 'auto' : '100%',
+                      }}
+                    >
+                      <FreelancerCard
+                        freelancer={freelancer}
+                        index={index}
+                        onDelete={handleDelete}
+                        onEdit={handleOpenEditDialog}
+                        isDragging={snapshot.isDragging}
+                      />
+                    </Box>
+                  )}
+                </Draggable>
               ))}
               {provided.placeholder}
             </Box>
           )}
         </Droppable>
       </DragDropContext>
+      <EditFreelancerDialog
+        open={openEditDialog}
+        freelancer={editingFreelancer}
+        onClose={handleCloseEditDialog}
+        onSave={handleSaveEdit}
+      />
     </Box>
   );
 };
 
-const FreelancerCard: React.FC<{ freelancer: Freelancer; index: number; onDelete: (index: number) => void; onEdit: (updatedFreelancer: Freelancer, index: number) => void }> = ({
+const FreelancerCard: React.FC<{
+  freelancer: Freelancer;
+  index: number;
+  onDelete: (index: number) => void;
+  onEdit: (freelancer: Freelancer, index: number) => void;
+  isDragging: boolean;
+}> = ({
   freelancer,
   index,
   onDelete,
   onEdit,
+  isDragging,
 }) => {
-  const [editing, setEditing] = useState(false);
-  const [updatedFreelancer, setUpdatedFreelancer] = useState(freelancer);
-
   const handleEditClick = () => {
-    setEditing(true);
-  };
-
-  const handleSaveClick = () => {
-    onEdit(updatedFreelancer, index);
-    setEditing(false);
-  };
-
-  const handleCancelClick = () => {
-    setUpdatedFreelancer(freelancer);
-    setEditing(false);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setUpdatedFreelancer({
-      ...updatedFreelancer,
-      [name]: name === 'skills' ? value.split(',').map((skill) => skill.trim()) : value,
-    });
+    onEdit(freelancer, index);
   };
 
   return (
-    <Draggable key={index} draggableId={`${index}`} index={index}>
-      {(provided) => (
-        <Box sx={{ mb: '2%' }}>
-          <Card
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            className="freelancer-card"
-            sx={{ width: '95%', height: 'auto' }}
-          >
-            <CardContent sx={{ p: '3%', display: 'flex', flexDirection: 'column' }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: '2%' }}>
-                {editing ? (
-                  <TextField
-                    name="firstName"
-                    label="First Name"
-                    value={updatedFreelancer.firstName}
-                    onChange={handleChange}
-                    sx={{ mr: '2%', '& .MuiOutlinedInput-root': { '& > fieldset': { border: 'none' } } }}
-                  />
-                ) : (
-                  <Typography variant="h5" sx={{ fontFamily: 'Montserrat', fontWeight: '600' }}>
-                    {freelancer.firstName} {freelancer.lastName}
-                  </Typography>
-                )}
-                <Box>
-                  <IconButton onClick={() => onDelete(index)} color="primary">
-                    <DeleteIcon />
-                  </IconButton>
-                  {editing ? (
-                    <>
-                      <Button onClick={handleSaveClick} color="primary" sx={{ mr: '1%' }}>
-                        Save
-                      </Button>
-                      <Button onClick={handleCancelClick} color="secondary" sx={{ ml: '26%' }}>
-                        Cancel
-                      </Button>
-                    </>
-                  ) : (
-                    <Button onClick={handleEditClick} color="primary">
-                      Edit
-                    </Button>
-                  )}
-                </Box>
-              </Box>
-              {editing ? (
-                <>
-                  <TextField
-                    name="lastName"
-                    label="Last Name"
-                    value={updatedFreelancer.lastName}
-                    onChange={handleChange}
-                    sx={{ mb: '1%', '& .MuiOutlinedInput-root': { '& > fieldset': { border: 'none' } } }}
-                  />
-                  <TextField
-                    name="age"
-                    label="Age"
-                    type="number"
-                    value={updatedFreelancer.age}
-                    onChange={handleChange}
-                    sx={{ mb: '1%', '& .MuiOutlinedInput-root': { '& > fieldset': { border: 'none' } } }}
-                  />
-                  <TextField
-                    name="skills"
-                    label="Skills"
-                    multiline
-                    value={updatedFreelancer.skills.join(', ')}
-                    onChange={handleChange}
-                    sx={{ mb: '1%', '& .MuiOutlinedInput-root': { '& > fieldset': { border: 'none' } } }}
-                  />
-                </>
-              ) : (
-                <>
-                  <Typography sx={{ mt: '2%', fontFamily: 'Montserrat' }}>
-                    <Box component="span" sx={{ fontWeight: '600' }}>
-                      Age:
-                    </Box>{' '}
-                    {freelancer.age}
-                  </Typography>
-                  <Typography sx={{ mt: '2%', fontFamily: 'Montserrat', whiteSpace: 'normal' }}>
-                    <Box component="span" sx={{ fontWeight: '600' }}>
-                      Skills:
-                    </Box>{' '}
-                    {freelancer.skills.join(', ')}
-                  </Typography>
-                </>
-              )}
-            </CardContent>
-          </Card>
-        </Box>
-      )}
-    </Draggable>
+    <Box sx={{ mb: '2%' }}>
+      <Card
+        className="freelancer-card"
+        sx={{ width: '90%', height: isDragging ? 'auto' : '100%' }}
+      >
+        <CardContent sx={{ p: '3%', display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: '2%' }}>
+            <Typography variant="h5" sx={{ fontFamily: 'Montserrat', fontWeight: '600' }}>
+              {freelancer.firstName} {freelancer.lastName}
+            </Typography>
+            <Box>
+              <IconButton onClick={() => onDelete(index)} color="primary">
+                <DeleteIcon />
+              </IconButton>
+              <Button onClick={handleEditClick} color="primary">
+                Edit
+              </Button>
+            </Box>
+          </Box>
+          <Typography sx={{ mt: '2%', fontFamily: 'Montserrat' }}>
+            <Box component="span" sx={{ fontWeight: '600' }}>
+              Age:
+            </Box>{' '}
+            {freelancer.age}
+          </Typography>
+          <Typography sx={{ mt: '2%', fontFamily: 'Montserrat', whiteSpace: 'normal' }}>
+            <Box component="span" sx={{ fontWeight: '600' }}>
+              Skills:
+            </Box>{' '}
+            {freelancer.skills.join(', ')}
+          </Typography>
+        </CardContent>
+      </Card>
+    </Box>
   );
 };
 
