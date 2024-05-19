@@ -4,6 +4,7 @@ import { FC, useState } from "react";
 import { darkTheme, lightTheme } from '../themes/themes';
 import MenuIcon from '@mui/icons-material/Menu';
 
+
 const DefaultLayout: FC = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

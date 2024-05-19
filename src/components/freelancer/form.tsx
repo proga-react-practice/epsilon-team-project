@@ -33,7 +33,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ initialValues }) =>
   );
 
   return (
-    <Box sx={{ mt: '10%', width: '100%' }} color="secondary">
+    <Box sx={{ mt: '5%', width: '100%' }} color="secondary">
       <form onSubmit={handleSubmit(handleSubmitForm)}>
         <FormGroup>
           <Box sx={{ mb: '2%' }} >

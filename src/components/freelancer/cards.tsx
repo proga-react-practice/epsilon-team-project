@@ -120,7 +120,7 @@ const FreelancerCard: React.FC<{
     <Box sx={{ mb: '2%' }}>
       <Card
         className="freelancer-card"
-        sx={{ width: '95%', height: isDragging ? 'auto' : '100%' }}
+        sx={{ width: '90%', height: isDragging ? 'auto' : '100%' }}
       >
         <CardContent sx={{ p: '3%', display: 'flex', flexDirection: 'column' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: '2%' }}>
