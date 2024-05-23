@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Typography, Card, CardContent, Box, Button, Menu, MenuItem } from '@mui/material';
+import { Typography, Card, CardContent, Box, Button, Menu, MenuItem, TextField } from '@mui/material';
 import { Freelancer } from '../utils/Freelancer';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -20,6 +20,8 @@ const useProposalContext = () => useContext(ProposalContext);
 const FreelancerList: React.FC = () => {
   const { freelancers, deleteFreelancer, updateFreelancer } = useFreelancerContext()!;
   const { proposals, addProposal } = useProposalContext()!;
+
+  const [searchSkills, setSearchSkills] = useState('');
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
@@ -59,8 +61,22 @@ const FreelancerList: React.FC = () => {
     handleCloseEditDialog();
   };
 
+  const filteredFreelancers = freelancers.filter(freelancer =>
+    freelancer.skills.some(skill =>
+      skill.toLowerCase().includes(searchSkills.toLowerCase())
+    )
+  );
+
   return (
     <Box sx={{ ml: '10%' }}>
+      <Box sx={{ mb: 3 }}>
+        <TextField
+          label="Enter the skills that interest you"
+          value={searchSkills}
+          onChange={e => setSearchSkills(e.target.value)}
+          sx={{ width: '90%' }}
+        />
+      </Box>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="freelancers">
           {(provided, snapshot) => (
@@ -72,7 +88,7 @@ const FreelancerList: React.FC = () => {
                 overflowY: 'auto',
               }}
             >
-              {freelancers.map((freelancer, index) => (
+              {filteredFreelancers.map((freelancer, index) => (
                 <Draggable key={index} draggableId={`${index}`} index={index}>
                   {(provided, snapshot) => (
                     <Box
@@ -188,7 +204,7 @@ const FreelancerCard: React.FC<FreelancerCardProps> = ({
               sx={{
                 fontFamily: 'Montserrat',
                 fontWeight: '600',
-                fontSize: { xs: '1rem', sm: '1.25rem' },
+                fontSize: { xs: '1rem',sm: '1.25rem' },
               }}
             >
               {freelancer.firstName} {freelancer.lastName}
@@ -205,89 +221,89 @@ const FreelancerCard: React.FC<FreelancerCardProps> = ({
                 <MoreVertIcon />
               </IconButton>
               <Menu
-  id="long-menu"
-  anchorEl={anchorEl}
-  open={open}
-  onClose={handleClose}
-  anchorOrigin={{
-    vertical: 'bottom',
-    horizontal: 'right',
-  }}
-  transformOrigin={{
-    vertical: 'top',
-    horizontal: 'right',
-  }}
->
-  <MenuItem onClick={() => onDelete(index)}>Delete</MenuItem>
-  <MenuItem onClick={handleEditClick}>Edit</MenuItem>
-  <MenuItem onClick={handleOfferJobClick}>Offer Job</MenuItem>
-</Menu>
-</Box>
-<Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center', gap: 1 }}>
-  <IconButton size="small" onClick={() => onDelete(index)} color="primary">
-    <DeleteIcon fontSize="small" />
-  </IconButton>
-  <EditIcon onClick={handleEditClick} color="primary" fontSize="small" />
-  <Button size="small" onClick={handleOfferJobClick} color="primary">
-    Offer Job
-  </Button>
-</Box>
-</Box>
-<Typography
-  sx={{
-    mt: '2%',
-    fontFamily: 'Montserrat',
-    fontSize: { xs: '0.875rem', sm: '1rem' },
-  }}
->
-  <Box component="span" sx={{ fontWeight: '600' }}>
-    Age:
-  </Box>{' '}
-  {freelancer.age}
-</Typography>
-<Typography
-  sx={{
-    mt: '2%',
-    fontFamily: 'Montserrat',
-    whiteSpace: 'normal',
-    fontSize: { xs: '0.875rem', sm: '1rem' },
-  }}
->
-  <Box component="span" sx={{ fontWeight: '600' }}>
-    Skills:
-  </Box>{' '}
-  {freelancer.skills.join(', ')}
-</Typography>
-{proposals.length > 0 && (
-  <Box sx={{ position: 'absolute', bottom: '2%', right: '2%' }}>
-    <Button size="small" onClick={handleShowProposals} color="primary">
-      View offers ({proposals.length})
-    </Button>
-  </Box>
-)}
-</CardContent>
-</Card>
-<Dialog open={openModal} onClose={handleCloseModal}>
-  <AddOrderForm addProject={handleAddProposal} onSuccess={handleCloseModal} />
-</Dialog>
-<Dialog
-  open={showProposals}
-  onClose={handleCloseProposals}
-  maxWidth={false}
-  fullWidth={true}
-  PaperProps={{
-    style: {
-      width: '50%',
-      height: '70%',
-      maxWidth: 'none',
-      maxHeight: 'none',
-    },
-  }}
->
-  <ProposalList proposals={proposals} />
-</Dialog>
-</Box>
-);
+                id="long-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+              >
+                <MenuItem onClick={() => onDelete(index)}>Delete</MenuItem>
+                <MenuItem onClick={handleEditClick}>Edit</MenuItem>
+                <MenuItem onClick={handleOfferJobClick}>Offer Job</MenuItem>
+              </Menu>
+            </Box>
+            <Box sx={{ display: { xs: 'none', sm: 'flex' }, alignItems: 'center', gap: 1 }}>
+              <IconButton size="small" onClick={() => onDelete(index)} color="primary">
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+              <EditIcon onClick={handleEditClick} color="primary" fontSize="small" />
+              <Button size="small" onClick={handleOfferJobClick} color="primary">
+                Offer Job
+              </Button>
+            </Box>
+          </Box>
+          <Typography
+            sx={{
+              mt: '2%',
+              fontFamily: 'Montserrat',
+              fontSize: { xs: '0.875rem', sm: '1rem' },
+            }}
+          >
+            <Box component="span" sx={{ fontWeight: '600' }}>
+              Age:
+            </Box>{' '}
+            {freelancer.age}
+          </Typography>
+          <Typography
+            sx={{
+              mt: '2%',
+              fontFamily: 'Montserrat',
+              whiteSpace: 'normal',
+              fontSize: { xs: '0.875rem', sm: '1rem' },
+            }}
+          >
+            <Box component="span" sx={{ fontWeight: '600' }}>
+              Skills:
+            </Box>{' '}
+            {freelancer.skills.join(', ')}
+          </Typography>
+          {proposals.length > 0 && (
+            <Box sx={{ position: 'absolute', bottom: '2%', right: '2%' }}>
+              <Button size="small" onClick={handleShowProposals} color="primary">
+                View offers ({proposals.length})
+              </Button>
+            </Box>
+          )}
+        </CardContent>
+      </Card>
+      <Dialog open={openModal} onClose={handleCloseModal}>
+        <AddOrderForm addProject={handleAddProposal} onSuccess={handleCloseModal} />
+      </Dialog>
+      <Dialog
+        open={showProposals}
+        onClose={handleCloseProposals}
+        maxWidth={false}
+        fullWidth={true}
+        PaperProps={{
+          style: {
+            width: '50%',
+            height: '70%',
+            maxWidth: 'none',
+            maxHeight: 'none',
+          },
+        }}
+      >
+        <ProposalList proposals={proposals} />
+      </Dialog>
+    </Box>
+  );
 };
 
 export default FreelancerList;
