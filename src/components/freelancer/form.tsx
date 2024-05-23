@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { TextField, Button, InputLabel, FormGroup, Box, Typography } from '@mui/material';
-import SkillsSelect from './SkillSelect';
-import { Freelancer } from './Freelancer';
+import SkillsSelect from './FreelancerCards/SkillSelect';
+import { Freelancer } from './utils/Freelancer';
 import { useFreelancerContext } from '../context/FreelancerContext';
 
 interface RegistrationFormProps {

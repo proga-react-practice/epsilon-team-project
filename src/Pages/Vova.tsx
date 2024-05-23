@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import RegistrationForm from '../components/freelancer/form';
 import { FreelancerContext } from '../components/context/FreelancerContext';
-import { Freelancer } from '../components/freelancer/Freelancer';
+import { Freelancer } from '../components/freelancer/utils/Freelancer';
 import { Box, Grid, Typography } from '@mui/material';
 
 const RegistrationPage = () => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, InputLabel, FormGroup, Box, Typography, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
-import SkillsSelect from '../freelancer/SkillSelect';
-import { Freelancer } from './Freelancer';
+import SkillsSelect from './SkillSelect';
+import { Freelancer } from '../utils/Freelancer';
 import { useForm } from 'react-hook-form';
 
 interface EditFreelancerDialogProps {
