@@ -22,7 +22,6 @@ import {
   Draggable,
   DropResult,
 } from "react-beautiful-dnd";
-
 const cardSlideIn = keyframes`
   0% {
     transform: translateX(100%);
@@ -31,7 +30,7 @@ const cardSlideIn = keyframes`
     transform: translateX(0);
   }
 `;
-
+import { useCustomerContext } from "../context/CustomerContext";
 const StyledCard = styled(Card)(({ theme }) => ({
   width: "500px",
   height: "auto",
@@ -65,12 +64,9 @@ export interface Project {
   technologies: string[];
 }
 
-const Cards: React.FC<{
-  projects: Project[];
-  deleteProject: (id: number) => void;
-  updateProject: (id: number, updatedProject: Project) => void;
-  setProjects: React.Dispatch<React.SetStateAction<Project[]>>;
-}> = ({ projects, deleteProject, updateProject, setProjects }) => {
+const Cards: React.FC = () => {
+  const { projects, deleteProject, updateProject, setProjects } =
+    useCustomerContext(); // Отримуємо значення з контексту
   const [editingProject, setEditingProject] = useState<number | null>(null);
   const { control, handleSubmit, setValue } = useForm<Project>({
     defaultValues: {
@@ -107,26 +103,12 @@ const Cards: React.FC<{
     const reorderedProjects = [...projects];
     const [movedProject] = reorderedProjects.splice(result.source.index, 1);
     reorderedProjects.splice(result.destination.index, 0, movedProject);
-    // Оновити стан з упорядкованими проектами
     setProjects(reorderedProjects);
   };
 
   return (
     <Grid container>
       <Box sx={{ width: "100%" }}>
-        <Typography
-          variant="h2"
-          sx={{
-            fontSize: 40,
-            fontWeight: 600,
-            fontFamily: "Montserrat",
-            marginBottom: "18px",
-            color: "primary.main",
-            marginTop: "20px",
-          }}
-        >
-          Project Orders:
-        </Typography>
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="projectCards">
             {(provided) => (
