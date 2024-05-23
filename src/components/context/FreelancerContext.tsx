@@ -1,5 +1,6 @@
 import { createContext, useState, ReactNode, useContext } from 'react';
-import { Freelancer } from '../freelancer/Freelancer';
+import { Freelancer } from '../freelancer/utils/Freelancer';
+import { v4 as uuidv4 } from 'uuid';
 
 interface FreelancerContextValue {
   freelancers: Freelancer[];
@@ -24,7 +25,8 @@ export const FreelancerProvider = ({ children }: { children: ReactNode }) => {
   const [freelancers, setFreelancers] = useState<Freelancer[]>([]);
 
   const registerFreelancer = (freelancer: Freelancer) => {
-    setFreelancers((prevFreelancers) => [...prevFreelancers, freelancer]);
+    const newFreelancer = { ...freelancer, id: uuidv4() };
+    setFreelancers((prevFreelancers) => [...prevFreelancers, newFreelancer]);
   };
 
   const deleteFreelancer = (index: number) => {

@@ -1,19 +1,16 @@
 import { Container, Box, Switch, AppBar, Toolbar, Typography, ThemeProvider, Link, IconButton, Menu, MenuItem } from '@mui/material';
 import { Outlet, Link as RouterLink } from "react-router-dom";
-import { FC, useState } from "react";
+import { FC, useState, useContext} from "react";
 import { darkTheme, lightTheme } from '../themes/themes';
 import MenuIcon from '@mui/icons-material/Menu';
-
+import { ThemeContext } from '../context/ThemeContext';
 
 const DefaultLayout: FC = () => {
-  const [darkMode, setDarkMode] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const { darkMode, toggleDarkMode } = useContext(ThemeContext)!;
 
-  const toggleDarkMode = () => {
-    setDarkMode(prevDarkMode => !prevDarkMode);
-  };
-
+  
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
