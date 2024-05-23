@@ -52,3 +52,4 @@ export const CustomerProvider = ({ children }: { children: ReactNode }) => {
     </CustomerContext.Provider>
   );
 };
+

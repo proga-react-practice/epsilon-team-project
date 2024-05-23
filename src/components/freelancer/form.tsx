@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { TextField, Button, InputLabel, FormGroup, Box, Typography } from '@mui/material';
-import SkillsSelect from './SkillSelect';
-import { Freelancer } from './Freelancer';
+import SkillsSelect from './FreelancerCards/SkillSelect';
+import { Freelancer } from './utils/Freelancer';
 import { useFreelancerContext } from '../context/FreelancerContext';
 
 interface RegistrationFormProps {
@@ -33,8 +33,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ initialValues }) =>
   );
 
   return (
-    <Box sx={{ mt: '10%', width: '100%' }} color="secondary">
-      <Typography style={{ fontSize: '40px', marginBottom: '5%', fontFamily: 'Montserrat' }} color="primary"><strong>Freelancer Registration</strong></Typography>
+    <Box sx={{ mt: '5%', width: '100%' }} color="secondary">
       <form onSubmit={handleSubmit(handleSubmitForm)}>
         <FormGroup>
           <Box sx={{ mb: '2%' }} >

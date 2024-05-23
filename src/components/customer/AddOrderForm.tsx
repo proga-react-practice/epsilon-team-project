@@ -29,7 +29,6 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
 }));
 
 const StyledFormWrapper = styled(Box)(({ theme }) => ({
-  // border: "1px solid #ccc",
   padding: "20px",
   width: "600px",
   backgroundColor: theme.palette.background.default,
@@ -38,9 +37,12 @@ const StyledFormWrapper = styled(Box)(({ theme }) => ({
   alignItems: "center",
 }));
 
-const AddOrderForm: React.FC<{ addProject: (project: Project) => void }> = ({
-  addProject,
-}) => {
+interface AddOrderFormProps {
+  addProject: (newProject: Project) => void;
+  onSuccess?: () => void;
+}
+
+const AddOrderForm: React.FC<AddOrderFormProps> = ({ addProject, onSuccess }) => {
   const { control, handleSubmit, reset } = useForm<Project>({
     defaultValues: {
       name: "",
@@ -57,6 +59,9 @@ const AddOrderForm: React.FC<{ addProject: (project: Project) => void }> = ({
     };
 
     addProject(newProject);
+    if (onSuccess) {
+      onSuccess();
+    }
     reset();
   };
 
