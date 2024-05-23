@@ -1,6 +1,6 @@
 // FreelancerListPage.tsx
 import { Box, Grid, Typography } from '@mui/material';
-import FreelancerList from '../components/freelancer/cards';
+import FreelancerList from '../components/freelancer/FreelancerCards/cards';
 
 const FreelancerListPage = () => {
   return (

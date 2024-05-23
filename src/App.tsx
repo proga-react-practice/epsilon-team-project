@@ -3,8 +3,13 @@ import { BrowserRouter } from "react-router-dom";
 import Router from "./AppRouter";
 import { FreelancerProvider } from "./components/context/FreelancerContext";
 import { CustomerProvider } from "./components/context/CustomerContext";
+import { ProposalProvider } from './components/context/PropsalContext';
+import { ThemeProvider } from './components/context/ThemeContext';
+
 const App: FC = () => {
   return (
+    <ThemeProvider>
+    <ProposalProvider>
     <CustomerProvider>
       <FreelancerProvider>
         <BrowserRouter>
@@ -12,6 +17,8 @@ const App: FC = () => {
         </BrowserRouter>
       </FreelancerProvider>
     </CustomerProvider>
+    </ProposalProvider>
+    </ThemeProvider>
   );
 };
 
