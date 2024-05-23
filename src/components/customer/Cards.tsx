@@ -22,6 +22,8 @@ import {
   Draggable,
   DropResult,
 } from "react-beautiful-dnd";
+import { useCustomerContext } from "../context/CustomerContext";
+
 const cardSlideIn = keyframes`
   0% {
     transform: translateX(100%);
@@ -30,7 +32,7 @@ const cardSlideIn = keyframes`
     transform: translateX(0);
   }
 `;
-import { useCustomerContext } from "../context/CustomerContext";
+
 const StyledCard = styled(Card)(({ theme }) => ({
   width: "500px",
   height: "auto",
@@ -66,7 +68,7 @@ export interface Project {
 
 const Cards: React.FC = () => {
   const { projects, deleteProject, updateProject, setProjects } =
-    useCustomerContext(); // Отримуємо значення з контексту
+    useCustomerContext();
   const [editingProject, setEditingProject] = useState<number | null>(null);
   const { control, handleSubmit, setValue } = useForm<Project>({
     defaultValues: {
@@ -76,6 +78,7 @@ const Cards: React.FC = () => {
       technologies: [],
     },
   });
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleEditProject = (projectId: number) => {
     const project = projects.find((p) => p.id === projectId);
@@ -106,9 +109,24 @@ const Cards: React.FC = () => {
     setProjects(reorderedProjects);
   };
 
+  const filteredProjects = projects.filter(
+    (project) =>
+      project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      project.technologies.some((tech) =>
+        tech.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+  );
+
   return (
     <Grid container>
       <Box sx={{ width: "100%" }}>
+        <TextField
+          label="Search projects by technologies"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          sx={{ width: "90%", mb: 2 }}
+        />
         <DragDropContext onDragEnd={handleOnDragEnd}>
           <Droppable droppableId="projectCards">
             {(provided) => (
@@ -117,7 +135,7 @@ const Cards: React.FC = () => {
                 {...provided.droppableProps}
                 sx={{ maxHeight: "900px", overflow: "auto" }}
               >
-                {projects.map((project, index) => (
+                {filteredProjects.map((project, index) => (
                   <Draggable
                     key={project.id}
                     draggableId={`${project.id}`}
@@ -396,4 +414,5 @@ const Cards: React.FC = () => {
     </Grid>
   );
 };
+
 export default Cards;
