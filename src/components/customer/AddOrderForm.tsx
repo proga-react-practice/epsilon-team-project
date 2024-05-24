@@ -30,19 +30,33 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
 
 const StyledFormWrapper = styled(Box)(({ theme }) => ({
   padding: "20px",
-  width: "600px",
+  maxWidth: "1800px",
   backgroundColor: theme.palette.background.default,
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+  justifyContent: "center",
+  [theme.breakpoints.down("sm")]: {},
 }));
+
+const CenteredFormContainer = styled(Box)({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  flexDirection: "column",
+  width: "100%",
+  paddingTop: "30px",
+});
 
 interface AddOrderFormProps {
   addProject: (newProject: Project) => void;
   onSuccess?: () => void;
 }
 
-const AddOrderForm: React.FC<AddOrderFormProps> = ({ addProject, onSuccess }) => {
+const AddOrderForm: React.FC<AddOrderFormProps> = ({
+  addProject,
+  onSuccess,
+}) => {
   const { control, handleSubmit, reset } = useForm<Project>({
     defaultValues: {
       name: "",
@@ -66,33 +80,24 @@ const AddOrderForm: React.FC<AddOrderFormProps> = ({ addProject, onSuccess }) =>
   };
 
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      minHeight="100vh"
-    >
-      <Box
-        className="form-container"
+    <CenteredFormContainer>
+      <StyledTypography
+        variant="h2"
         sx={{
-          justifyContent: "left",
-          padding: "20px",
+          marginBottom: "20px",
+          color: (theme) =>
+            theme.palette.mode === "dark" ? "#62D682" : "#646BD9",
         }}
       >
-        <StyledFormWrapper>
-          <StyledTypography
-            variant="h2"
-            sx={{
-              marginBottom: "20px",
-              color: (theme) =>
-                theme.palette.mode === "dark" ? "#62D682" : "#646BD9",
-            }}
-          >
-            Project Order Form
-          </StyledTypography>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Box className="form-group" sx={{ marginBottom: "15px" }}>
-              <StyledTypography>Project Name:</StyledTypography>
+        Project Order Form
+      </StyledTypography>
+      <StyledFormWrapper>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FormGroup>
+            <Box sx={{ mb: "2%", width: "100%" }}>
+              <StyledTypography sx={{ fontFamily: "Montserrat" }}>
+                Project Name:
+              </StyledTypography>
               <Controller
                 name="name"
                 control={control}
@@ -114,15 +119,17 @@ const AddOrderForm: React.FC<AddOrderFormProps> = ({ addProject, onSuccess }) =>
                     error={!!error}
                     helperText={error ? error.message : null}
                     sx={{
-                      width: "350px",
+                      width: "100%",
                     }}
                   />
                 )}
               />
             </Box>
 
-            <Box className="form-group" sx={{ marginBottom: "15px" }}>
-              <StyledTypography>Project Description:</StyledTypography>
+            <Box sx={{ mb: "2%", width: "100%" }}>
+              <StyledTypography sx={{ fontFamily: "Montserrat" }}>
+                Project Description:
+              </StyledTypography>
               <Controller
                 name="description"
                 control={control}
@@ -143,14 +150,16 @@ const AddOrderForm: React.FC<AddOrderFormProps> = ({ addProject, onSuccess }) =>
                     error={!!error}
                     helperText={error ? error.message : null}
                     sx={{
-                      width: "350px",
+                      width: "100%",
                     }}
                   />
                 )}
               />
             </Box>
-            <Box className="form-group" sx={{ marginBottom: "15px" }}>
-              <StyledTypography>Deadline:</StyledTypography>
+            <Box sx={{ mb: "2%", width: "100%" }}>
+              <StyledTypography sx={{ fontFamily: "Montserrat" }}>
+                Deadline:
+              </StyledTypography>
               <Controller
                 name="deadline"
                 control={control}
@@ -172,12 +181,17 @@ const AddOrderForm: React.FC<AddOrderFormProps> = ({ addProject, onSuccess }) =>
                     required
                     error={!!error}
                     helperText={error ? error.message : null}
+                    sx={{
+                      width: "100%",
+                    }}
                   />
                 )}
               />
             </Box>
-            <Box className="form-group" sx={{ marginBottom: "15px" }}>
-              <StyledTypography>Technologies:</StyledTypography>
+            <Box sx={{ mb: "2%", width: "100%" }}>
+              <StyledTypography sx={{ fontFamily: "Montserrat" }}>
+                Technologies:
+              </StyledTypography>
               <Controller
                 name="technologies"
                 control={control}
@@ -230,30 +244,50 @@ const AddOrderForm: React.FC<AddOrderFormProps> = ({ addProject, onSuccess }) =>
                 )}
               />
             </Box>
-            <Box className="form-group" sx={{ marginBottom: "15px" }}>
+            <Box sx={{ mb: "2%", width: "100%" }}>
               <Button
+                sx={{
+                  mt: "8%",
+                  width: "100%",
+                  height: "48px",
+                  color: "white",
+                  fontSize: "16px",
+                  fontFamily: "Montserrat",
+                }}
                 type="submit"
                 variant="contained"
-                sx={{
-                  marginRight: "10px",
-                  bgcolor: (theme) => theme.palette.primary.main,
-                }}
+                color="primary"
               >
                 Submit
               </Button>
               <Button
+                sx={{
+                  mt: "3%",
+                  width: "100%",
+                  height: "48px",
+                  color: "white",
+                  fontSize: "16px",
+                  fontFamily: "Montserrat",
+                }}
                 type="button"
+                onClick={() => {
+                  reset({
+                    name: "",
+                    description: "",
+                    deadline: "",
+                    technologies: [],
+                  });
+                }}
                 variant="contained"
-                sx={{ bgcolor: (theme) => theme.palette.secondary.main }}
-                onClick={() => reset()}
+                color="primary"
               >
                 Clear Form
               </Button>
             </Box>
-          </form>
-        </StyledFormWrapper>
-      </Box>
-    </Box>
+          </FormGroup>
+        </form>
+      </StyledFormWrapper>
+    </CenteredFormContainer>
   );
 };
 
