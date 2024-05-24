@@ -1,11 +1,8 @@
 import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import Cards from "../components/customer/Cards";
-import { useCustomerContext } from "../components/context/CustomerContext";
 
 const CustomersListPage: React.FC = () => {
-  const { projects, deleteProject, updateProject } = useCustomerContext()!;
-
   return (
     <Box
       sx={{
@@ -37,11 +34,7 @@ const CustomersListPage: React.FC = () => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={10} md={10} lg={10} xl={10}>
-          <Cards
-            projects={projects}
-            deleteProject={deleteProject}
-            updateProject={updateProject}
-          />
+          <Cards />
         </Grid>
       </Grid>
     </Box>
