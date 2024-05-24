@@ -23,7 +23,11 @@ const pageVariants = {
   },
 };
 
-const Animation = ({ children }) => {
+interface AnimationChildrenProps {
+  children: React.ReactNode;
+}
+
+const Animation = ({ children }: AnimationChildrenProps) => {
   return (
     <motion.div
       variants={pageVariants}
