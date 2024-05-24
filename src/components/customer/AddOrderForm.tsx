@@ -30,7 +30,7 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
 
 const StyledFormWrapper = styled(Box)(({ theme }) => ({
   padding: "20px",
-  maxWidth: "1800px",
+  maxWidth: "1500px",
   backgroundColor: theme.palette.background.default,
   display: "flex",
   flexDirection: "column",
@@ -91,9 +91,13 @@ const AddOrderForm: React.FC<AddOrderFormProps> = ({
       >
         Project Order Form
       </StyledTypography>
-      <StyledFormWrapper>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <FormGroup>
+      <StyledFormWrapper sx={{ width: "50%" }}>
+        <form
+          style={{ width: "100%" }}
+          onSubmit={handleSubmit(onSubmit)}
+          className="orderForm"
+        >
+          <FormGroup sx={{ width: "100%" }}>
             <Box sx={{ mb: "2%", width: "100%" }}>
               <StyledTypography sx={{ fontFamily: "Montserrat" }}>
                 Project Name:

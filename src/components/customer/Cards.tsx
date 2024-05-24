@@ -363,7 +363,12 @@ const Cards: React.FC = () => {
                                   {project.name}
                                 </Typography>
                                 <Typography
-                                  sx={{ mt: "12px", fontFamily: "Montserrat" }}
+                                  sx={{
+                                    mt: "12px",
+                                    fontFamily: "Montserrat",
+                                    maxWidth: "350px",
+                                    overflow: "hidden",
+                                  }}
                                 >
                                   <Box
                                     component="span"
