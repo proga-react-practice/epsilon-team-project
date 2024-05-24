@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Typography,
   Box,
@@ -10,10 +10,16 @@ import {
   FormGroup,
   FormControlLabel,
   Checkbox,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Divider,
 } from "@mui/material";
 import { styled, keyframes } from "@mui/system";
+import ReplyIcon from "@mui/icons-material/Reply";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import ViewResponsesIcon from "@mui/icons-material/ViewList";
 import Grid from "@mui/material/Grid";
 import { useForm, Controller } from "react-hook-form";
 import {
@@ -23,6 +29,8 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import { useCustomerContext } from "../context/CustomerContext";
+import RegistrationForm from "../freelancer/form";
+import { Freelancer } from "../freelancer/utils/Freelancer";
 
 const cardSlideIn = keyframes`
   0% {
@@ -79,6 +87,26 @@ const Cards: React.FC = () => {
     },
   });
   const [searchQuery, setSearchQuery] = useState("");
+  const [openRegistrationDialog, setOpenRegistrationDialog] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [projectResponses, setProjectResponses] = useState<{
+    [key: number]: Freelancer[];
+  }>({});
+  const [openResponsesDialog, setOpenResponsesDialog] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState<number | null>(
+    null
+  );
+
+  useEffect(() => {
+    const storedResponses = localStorage.getItem("projectResponses");
+    if (storedResponses) {
+      setProjectResponses(JSON.parse(storedResponses));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("projectResponses", JSON.stringify(projectResponses));
+  }, [projectResponses]);
 
   const handleEditProject = (projectId: number) => {
     const project = projects.find((p) => p.id === projectId);
@@ -117,6 +145,26 @@ const Cards: React.FC = () => {
         tech.toLowerCase().includes(searchQuery.toLowerCase())
       )
   );
+
+  const handleOpenRegistrationDialog = (project: Project) => {
+    setSelectedProject(project);
+    setOpenRegistrationDialog(true);
+  };
+
+  const handleCloseRegistrationDialog = () => {
+    setOpenRegistrationDialog(false);
+    setSelectedProject(null);
+  };
+
+  const handleOpenResponsesDialog = (projectId: number) => {
+    setSelectedProjectId(projectId);
+    setOpenResponsesDialog(true);
+  };
+
+  const handleCloseResponsesDialog = () => {
+    setOpenResponsesDialog(false);
+    setSelectedProjectId(null);
+  };
 
   return (
     <Grid container>
@@ -347,7 +395,12 @@ const Cards: React.FC = () => {
                                   {project.name}
                                 </Typography>
                                 <Typography
-                                  sx={{ mt: "12px", fontFamily: "Montserrat" }}
+                                  sx={{
+                                    mt: "12px",
+                                    fontFamily: "Montserrat",
+                                    maxWidth: "350px",
+                                    overflow: "hidden",
+                                  }}
                                 >
                                   <Box
                                     component="span"
@@ -397,6 +450,22 @@ const Cards: React.FC = () => {
                                 >
                                   <DeleteIcon />
                                 </IconButton>
+                                <IconButton
+                                  onClick={() =>
+                                    handleOpenRegistrationDialog(project)
+                                  }
+                                  color="primary"
+                                >
+                                  <ReplyIcon />
+                                </IconButton>
+                                <IconButton
+                                  onClick={() =>
+                                    handleOpenResponsesDialog(project.id)
+                                  }
+                                  color="primary"
+                                >
+                                  <ViewResponsesIcon />
+                                </IconButton>
                               </Box>
                             </>
                           )}
@@ -411,8 +480,63 @@ const Cards: React.FC = () => {
           </Droppable>
         </DragDropContext>
       </Box>
+      <Dialog
+        open={openRegistrationDialog}
+        onClose={handleCloseRegistrationDialog}
+        maxWidth="md"
+        fullWidth
+      >
+        <DialogTitle>Respond to Project</DialogTitle>
+        <DialogContent>
+          {selectedProject && (
+            <RegistrationForm
+              initialValues={{
+                id: "",
+                firstName: "",
+                lastName: "",
+                age: 0,
+                skills: [],
+              }}
+              onSubmit={(data) => {
+                setProjectResponses((prevResponses) => {
+                  const newResponses = { ...prevResponses };
+                  if (newResponses[selectedProject!.id]) {
+                    newResponses[selectedProject!.id] = [
+                      ...newResponses[selectedProject!.id],
+                      data,
+                    ];
+                  } else {
+                    newResponses[selectedProject!.id] = [data];
+                  }
+                  return newResponses;
+                });
+                handleCloseRegistrationDialog();
+              }}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+      <Dialog
+        open={openResponsesDialog}
+        onClose={handleCloseResponsesDialog}
+        maxWidth="md"
+        fullWidth
+      >
+        <DialogTitle>Responses for Project {selectedProjectId}</DialogTitle>
+        <DialogContent>
+          {projectResponses[selectedProjectId!]?.map((response, index) => (
+            <div key={index}>
+              <Typography>
+                {response.firstName} {response.lastName}
+              </Typography>
+              <Typography>Age: {response.age}</Typography>
+              <Typography>Skills: {response.skills.join(", ")}</Typography>
+              <Divider />
+            </div>
+          ))}
+        </DialogContent>
+      </Dialog>
     </Grid>
   );
 };
-
 export default Cards;
