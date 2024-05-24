@@ -10,8 +10,12 @@ import {
   FormGroup,
   FormControlLabel,
   Checkbox,
+  Dialog,
+  DialogTitle,
+  DialogContent,
 } from "@mui/material";
 import { styled, keyframes } from "@mui/system";
+import ReplyIcon from "@mui/icons-material/Reply";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Grid from "@mui/material/Grid";
@@ -23,7 +27,7 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import { useCustomerContext } from "../context/CustomerContext";
-
+import RegistrationForm from "../freelancer/form";
 const cardSlideIn = keyframes`
   0% {
     transform: translateX(100%);
@@ -79,6 +83,8 @@ const Cards: React.FC = () => {
     },
   });
   const [searchQuery, setSearchQuery] = useState("");
+  const [openRegistrationDialog, setOpenRegistrationDialog] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const handleEditProject = (projectId: number) => {
     const project = projects.find((p) => p.id === projectId);
@@ -117,6 +123,16 @@ const Cards: React.FC = () => {
         tech.toLowerCase().includes(searchQuery.toLowerCase())
       )
   );
+
+  const handleOpenRegistrationDialog = (project: Project) => {
+    setSelectedProject(project);
+    setOpenRegistrationDialog(true);
+  };
+
+  const handleCloseRegistrationDialog = () => {
+    setOpenRegistrationDialog(false);
+    setSelectedProject(null);
+  };
 
   return (
     <Grid container>
@@ -397,6 +413,14 @@ const Cards: React.FC = () => {
                                 >
                                   <DeleteIcon />
                                 </IconButton>
+                                <IconButton
+                                  onClick={() =>
+                                    handleOpenRegistrationDialog(project)
+                                  }
+                                  color="primary"
+                                >
+                                  <ReplyIcon />
+                                </IconButton>
                               </Box>
                             </>
                           )}
@@ -411,6 +435,31 @@ const Cards: React.FC = () => {
           </Droppable>
         </DragDropContext>
       </Box>
+      <Dialog
+        open={openRegistrationDialog}
+        onClose={handleCloseRegistrationDialog}
+        maxWidth="md"
+        fullWidth
+      >
+        <DialogTitle>Respond to Project</DialogTitle>
+        <DialogContent>
+          {selectedProject && (
+            <RegistrationForm
+              initialValues={{
+                id: "",
+                firstName: "",
+                lastName: "",
+                age: 0,
+                skills: [],
+              }}
+              onSubmit={(data) => {
+                console.log("Response:", data);
+                handleCloseRegistrationDialog();
+              }}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </Grid>
   );
 };
