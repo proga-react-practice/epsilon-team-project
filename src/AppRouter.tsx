@@ -14,20 +14,12 @@ import {
 import DefaultLayout from "./components/layout/layout";
 import FreelancerListPage from "./Pages/Freelancers";
 import CustomersListPage from "./Pages/Customers";
-import Animation from "./components/Animations/Animation";
 const Router = () => {
   return (
     <Routes>
       <Route path={DEFAULT_ROUTE} element={<DefaultLayout />}>
         <Route index element={<Navigate to={HOME_ROUTE} replace />} />
-        <Route
-          path={HOME_ROUTE}
-          element={
-            <Animation>
-              <Home />
-            </Animation>
-          }
-        />
+        <Route path={HOME_ROUTE} element={<Home />} />
         <Route path={FREELANCERS_ROUTE} element={<FreelancerListPage />} />
         <Route path={FREELANCERS_REG_ROUTE} element={<RegistrationPage />} />
         <Route path={CUSTOMERS_REG_ROUTE} element={<Customers />} />
