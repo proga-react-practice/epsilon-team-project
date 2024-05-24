@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Typography,
   Box,
@@ -96,6 +96,17 @@ const Cards: React.FC = () => {
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(
     null
   );
+
+  useEffect(() => {
+    const storedResponses = localStorage.getItem("projectResponses");
+    if (storedResponses) {
+      setProjectResponses(JSON.parse(storedResponses));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("projectResponses", JSON.stringify(projectResponses));
+  }, [projectResponses]);
 
   const handleEditProject = (projectId: number) => {
     const project = projects.find((p) => p.id === projectId);
