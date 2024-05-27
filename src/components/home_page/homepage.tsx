@@ -89,7 +89,11 @@ const Home: React.FC = () => {
             mr: "10%",
           }}
         >
-          <img src={"home5.png"} alt="Home" style={{ maxWidth: "100%" }} />
+          <img
+            src={"./src/images/home5.png"}
+            alt="Home"
+            style={{ maxWidth: "100%" }}
+          />
         </Box>
       </Grid>
     </Grid>
