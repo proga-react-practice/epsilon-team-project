@@ -283,20 +283,21 @@ const FreelancerCard: React.FC<FreelancerCardProps> = ({
           )}
         </CardContent>
       </Card>
-      <Dialog open={openModal} onClose={handleCloseModal}>
+      <Dialog open={openModal} onClose={handleCloseModal} maxWidth="md" fullWidth >
         <AddOrderForm addProject={handleAddProposal} onSuccess={handleCloseModal} />
       </Dialog>
       <Dialog
         open={showProposals}
         onClose={handleCloseProposals}
         maxWidth={false}
-        fullWidth={true}
+        
         PaperProps={{
           style: {
-            width: '50%',
+            width: '80%',
             height: '70%',
             maxWidth: 'none',
             maxHeight: 'none',
+            
           },
         }}
       >

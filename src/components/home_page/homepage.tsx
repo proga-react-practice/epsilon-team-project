@@ -1,5 +1,6 @@
 import { Typography, Button, Box, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+
 const Home: React.FC = () => {
   const navigate = useNavigate();
   return (
