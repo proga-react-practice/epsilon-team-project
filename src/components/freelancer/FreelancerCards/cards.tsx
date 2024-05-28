@@ -60,12 +60,17 @@ const FreelancerList: React.FC = () => {
     }
     handleCloseEditDialog();
   };
+  
 
-  const filteredFreelancers = freelancers.filter(freelancer =>
-    freelancer.skills.some(skill =>
-      skill.toLowerCase().includes(searchSkills.toLowerCase())
-    )
-  );
+  const searchSkillsArray = searchSkills.toLowerCase().split(' ').filter(Boolean);
+
+  const filteredFreelancers = searchSkillsArray.length > 0
+    ? freelancers.filter(freelancer =>
+        freelancer.skills.some(skill =>
+          searchSkillsArray.some(searchSkill => skill.toLowerCase().includes(searchSkill))
+        )
+      )
+    : freelancers;
 
   return (
     <Box sx={{ ml: '10%' }}>
