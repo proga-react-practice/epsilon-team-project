@@ -91,7 +91,7 @@ const Home: React.FC = () => {
           }}
         >
           <img
-            src={"./src/images/home5.png"}
+            src={"./assets/home5.png"}
             alt="Home"
             style={{ maxWidth: "100%" }}
           />
