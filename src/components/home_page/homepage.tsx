@@ -1,5 +1,6 @@
 import { Typography, Button, Box, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import home  from "/assets/home5.png"
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -91,7 +92,7 @@ const Home: React.FC = () => {
           }}
         >
           <img
-            src={"./assets/home5.png"}
+            src={home}
             alt="Home"
             style={{ maxWidth: "100%" }}
           />
